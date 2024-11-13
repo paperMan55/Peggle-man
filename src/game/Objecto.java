@@ -80,10 +80,6 @@ public class Objecto {
         if(solid){
             checkCollision();
         }
-
-
-
-
     }
     public void checkCollision(){
         for (Objecto o:objs) {

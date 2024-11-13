@@ -1,5 +1,7 @@
 package game;
 
+import ObjectTools.Objecto2;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -95,6 +97,7 @@ public class StupidBounces {
         for (Objecto o:objs ) {
             o.update();
         }
+
     }
 /*
     public void hahaha(){

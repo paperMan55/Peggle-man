@@ -8,6 +8,5 @@ public class Map_Tester {
 
     public static void main(String[] args) {
 
-
     }
 }

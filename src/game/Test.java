@@ -4,8 +4,10 @@ package game;
 //import com.google.gson.reflect.TypeToken;
 
 
+import java.util.ArrayList;
+
 public class Test {
     public static void main(String[] args) {
-        System.out.println(100%0);
+        Disegno d = new Disegno(new ArrayList<>());
     }
 }
