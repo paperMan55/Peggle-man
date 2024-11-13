@@ -95,7 +95,7 @@ public class Objecto {
                         collideWithLine(o);
                         break;
                     case Objecto.OVAL:
-
+                        collideWithCircle(o);
                         break;
                     default:
                         collideWithSquare(o);
@@ -111,12 +111,25 @@ public class Objecto {
         this.position[1]+=y;
     }
     private void collideWithCircle(Objecto o){
-        float[] center = getCenter();
+
         if(type == OVAL){
             if(o.size[0] == o.size[1]){
                 double distance = Math.sqrt(Math.pow(getCenter()[0]-o.getCenter()[0],2)+Math.pow(getCenter()[1]-o.getCenter()[1],2));
-                if(distance<=size[0]/2+o.size[0]/2){
-                    
+                if(distance<size[0]/2+o.size[0]/2){
+                    double toMove = (size[0]/2+o.size[0]/2) -distance;
+                    float lineM = (getCenter()[1]-o.getCenter()[1])/(getCenter()[0]-o.getCenter()[0]);
+                    double moveX = (toMove/Math.sqrt(Math.pow(lineM,2)+1));
+                    double moveY = Math.sqrt(Math.pow(toMove,2)-Math.pow(moveX,2));
+                    System.out.println("distance: "+toMove);
+                    System.out.println("["+moveX+";"+moveY+"]");
+                    if(getCenter()[0]>o.getCenter()[0]){
+                        position[0] += moveX;
+                        position[1] += moveY;
+                    }else {
+                        position[0] -= moveX;
+                        position[1] -= moveY;
+                    }
+                    resolveBounce(momentum[1]/momentum[0],-1/lineM);
                 }
             }
         }

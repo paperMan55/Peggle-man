@@ -1,5 +1,11 @@
+import org.w3c.dom.css.*;
+
+import javax.naming.NameNotFoundException;
 import java.awt.*;
+
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
+import java.lang.*;
 
 public class Objecto2 {
     public static final String SQUARE = "square";
@@ -11,7 +17,7 @@ public class Objecto2 {
     public boolean debug = false;
     public float[] position;
     public float[] momentum;
-    public int[] size;
+    public float[] size;
     public String type;
     public Image image;
     public float drag;
@@ -19,39 +25,34 @@ public class Objecto2 {
     public float bounce;
     public Color color;
     public boolean solid;
-    private ArrayList<Objecto2> objs;
+    private ArrayList<Objecto> objs;
+    private boolean exCollision = false;
 
     //questa classe permetterà una gestione facilitata degli oggetti con attributi tipo posizione e grandezza
-    public Objecto2(int posX, int posY, int width, int height, String type) {
+    public Objecto2(float posX, float posY, float width, float height, String type) {
         init(posX,posY,width,height,type,new Color(0x000000),true,true);
     }
-    public Objecto2(int posX, int posY, int width, int height, String type, Color color){
+    public Objecto2(float posX, float posY, float width, float height, String type,Color color){
         init(posX,posY,width,height,type,color,true, true);
     }
-    public Objecto2(int posX, int posY, int width, int height, String type, Color color, boolean solid){
+    public Objecto2(float posX, float posY, float width, float height, String type,Color color,boolean solid){
         init(posX,posY,width,height,type,color,solid,true);
     }
-    public Objecto2(int posX, int posY, int width, int height, String type, Color color, boolean solid, boolean static_){
+    public Objecto2(float posX, float posY, float width, float height, String type,Color color,boolean solid, boolean static_){
         init(posX,posY,width,height,type,color,solid,static_);
     }
-    private void init(int posX, int posY, int width, int height, String type,Color color,boolean solid, boolean static_){
+    private void init(float posX, float posY, float width, float height, String type,Color color,boolean solid, boolean static_){
         this.type = type;
         position = new float[]{posX, posY};
-        size = new int[]{width,height};
+        size = new float[]{width,height};
         momentum = new float[]{0,0};
         drag = 1;
         gravity = 0f;
-        objs = new StupidBounces().getObjs2();
+        objs = new StupidBounces().getObjs();
         bounce = 0f;
         this.static_ = static_;
         this.color = color;
         this.solid = solid;
-    }
-    public Objecto2(int posX, int posY, int width, int height, Image image){
-        this.type = IMAGE;
-        this.image = image;
-        position = new float[]{posX, posY};
-        size = new int[]{width,height};
     }
 
     public void addForce(int xForce, int yForce){
@@ -70,19 +71,31 @@ public class Objecto2 {
         this.position[0] += (float) (momentum[0]*Clock.deltaTime);
         this.position[1] += (float) (momentum[1]*Clock.deltaTime);
 
-        ArrayList<Collision> cols = new ArrayList<>();
-        if(solid){
-            cols = checkCollision();
-        }
-        for(Collision c:cols){
-        }
-    }
-    public ArrayList<Collision> checkCollision(){
-        ArrayList<Collision> collisions = new ArrayList<>();
-        for (Objecto2 obj:objs){
+        ArrayList<Integer> cols = new ArrayList<>();
 
+        if(solid){
+            checkCollision();
         }
-        return collisions;
+
+
+
+
+    }
+    public void checkCollision(){
+        for (Objecto o:objs) {
+            if(!o.equals(this)){
+                switch (o.type){
+                    case Objecto.LINE:
+                        collideWithLine(o);
+                        break;
+                    case Objecto.OVAL:
+
+                        break;
+                    default:
+                        collideWithSquare(o);
+                }
+            }
+        }
     }
     public void setDrag(float drag){
         this.drag = drag;
@@ -91,127 +104,83 @@ public class Objecto2 {
         this.position[0] += x;
         this.position[1]+=y;
     }
-    public int collideWith(Objecto2 o){
-        switch (o.type){
-            case Objecto2.LINE:
-                return collideWithLine(o);
-            default:
-                return collideWithSquare(o);
-        }
-    }
-    private int collideWithSquare(Objecto2 o){
-        //b  = se due oggetti si toccano
-        if(!o.solid){
-            return 0;
-        }
-        boolean b=false;
-        double cambio;
-
-        double altezza2=size[1];
-        double base2=size[0];
-        double altezza1=o.size[1];
-        double base1=o.size[0];
-        double x2=getCenter()[0];
-        double y2=getCenter()[1];
-        double x1=o.getCenter()[0];
-        double y1=o.getCenter()[1];
-        if(x2>x1){
-            cambio=x1;
-            x1=x2;
-            x2=cambio;
-        }
-        if(y2>y1){
-            cambio=y1;
-            y1=y2;
-            y2=cambio;
-        }
-        if(altezza1/2+altezza2/2>y1-y2&&base1/2+base2/2>x1-x2){
-            b = true;
-        }
-
-        double posX1 = getCenter()[0];
-        double posY1 = getCenter()[1];
-        double posX2 = o.getCenter()[0];
-        double posY2 = o.getCenter()[1];
-
-        if(b){
-            float[] f1;
-            float[] f2;
-            if(posX1>=posX2 && posY1 >= posY2){       //basso destra
-                f1 = new float[]{position[0], position[1]};
-                f2 = new float[]{o.position[0]+o.size[0],o.position[1]+o.size[1]};
-
-
-                if(Math.abs(f1[0]-f2[0]) > Math.abs(f1[1]-f2[1])){
-                    adjustPosition(o,3,f1,f2);
-                    return 3;
-                }else{
-                    adjustPosition(o,2,f1,f2);
-                    return 2;
-                }
-            }else if(posX1<posX2 && posY1 >= posY2){  //basso sinistra
-                f1 = new float[]{position[0]+size[0], position[1]};
-                f2 = new float[]{o.position[0],o.position[1]+o.size[1]};
-
-                if(Math.abs(f1[0]-f2[0]) > Math.abs(f1[1]-f2[1])){
-                    adjustPosition(o,3,f1,f2);
-                    return 3;
-                }else{
-                    adjustPosition(o,4,f1,f2);
-                    return 4;
-                }
-            }else if(posX1<posX2){                    //alto sinistra
-                f1 = new float[]{position[0]+size[0], position[1]+size[1]};
-                f2 = new float[]{o.position[0],o.position[1]};
-
-                if(Math.abs(f1[0]-f2[0]) > Math.abs(f1[1]-f2[1])){
-                    adjustPosition(o,1,f1,f2);
-                    return 1;
-                }else{
-                    adjustPosition(o,4,f1,f2);
-                    return 4;
-                }
-            }else {                                   //alto destra
-                f1 = new float[]{position[0], position[1]+size[1]};
-                f2 = new float[]{o.position[0]+o.size[0],o.position[1]};
-
-                if(Math.abs(f1[0]-f2[0]) > Math.abs(f1[1]-f2[1])){
-                    adjustPosition(o,1,f1,f2);
-                    return 1;
-                }else{
-                    adjustPosition(o,2,f1,f2);
-                    return 2;
-                }
-            }
-
-        }
-        return 0;
-    }
-    private int collideWithLine(Objecto2 o){
+    private void collideWithCircle(Objecto o){
         float[] center = getCenter();
+        if(type == OVAL){
+            if(o.size[0] == o.size[1]){
+                double distance = Math.sqrt(Math.pow(getCenter()[0]-o.getCenter()[0],2)+Math.pow(getCenter()[1]-o.getCenter()[1],2));
+                if(distance<=size[0]/2+o.size[0]/2){
 
-        float lineM = (o.position[0]-o.size[0])/(o.position[1]-o.size[1]);//coefficiente angolare retta
-        float lineQ = o.position[1]-lineM*o.position[0];//termine noto retta
-        float[] angPos;
-        if(center[1]>=lineM*center[0]+lineQ){ //vuol dire che sta sotto alla linea
-            if(lineM>=0){ //angolo alto destra
-                angPos = getAnglePos(1);
-            }else{ //angolo alto sinistra
-                 angPos = getAnglePos(4);
-            }
-        }else{ //vuol dire che sta sopra alla linea
-            if(lineM>=0){ //angolo basso sinistra
-                 angPos = getAnglePos(2);
-            }else{ // angolo basso destra
-                 angPos = getAnglePos(3);
+                }
             }
         }
-        float incidentX = ((angPos[1]-momentum[0]/momentum[1]*angPos[0])-lineM)/(lineQ-momentum[0]/momentum[1]);
-        float incidentY = lineM*incidentX + lineQ;
-
-        move(incidentX-angPos[0],incidentY-angPos[1]);
-        return 0;
     }
+    private void collideWithSquare(Objecto o){
+
+        Rectangle this_ = new Rectangle(Math.round(position[0]),Math.round(position[1]),(int)size[0],(int)size[1]);
+        Rectangle other = new Rectangle(Math.round(o.position[0]),Math.round(o.position[1]),(int)o.size[0],(int)o.size[1]);
+        //b  = se due oggetti si toccano
+        if(!o.solid || !this_.intersects(other)){
+            return;
+        }
+        collideWithLine(new Objecto(o.position[0],o.position[1],o.position[0]+o.size[0],o.position[1],Objecto.LINE));
+        collideWithLine(new Objecto(o.position[0],o.position[1],o.position[0],o.position[1]+o.size[1],Objecto.LINE));
+        collideWithLine(new Objecto(o.position[0]+o.size[0],o.position[1],o.position[0]+o.size[0],o.position[1]+o.size[1],Objecto.LINE));
+
+        collideWithLine(new Objecto(o.position[0],o.position[1]+o.size[1],o.position[0]+o.size[0],o.position[1],Objecto.LINE));
+    }
+    private void collideWithLine(Objecto o){
+
+        if(!new Rectangle((int)position[0],(int)position[1],(int)size[0],(int)size[1]).intersectsLine(o.position[0],o.position[1],o.size[0],o.size[1])){
+            return;
+        }
+
+
+        float lineM = (o.position[1]-o.size[1])/(o.position[0]-o.size[0]);//coefficiente angolare retta
+
+        float momentumM = momentum[1]/momentum[0];
+        adjustPosition(o);
+        resolveBounce(momentumM,lineM);
+    }
+    //ang è il coefficiente angolare tra y/x
+    public void resolveBounce(float angObj2move,float angObj){
+
+        if(angObj-angObj2move == 0){
+            return;
+        }
+
+        double momentumForce = getVelocity();
+        double angBetween = Math.atan(Math.abs((angObj-angObj2move)/(angObj*angObj2move+1))); //in radiant
+
+        double repelF = Math.sin(angBetween)* momentumForce;
+
+        double outputX;
+        double outputY;
+        if(angObj == 0){
+            outputX = 0;
+            outputY = momentum[1];
+        }else if(Double.isInfinite(angObj)){
+            System.out.println("fatto qualcosa");
+            outputX = momentum[0];
+            outputY = 0;
+        } else{
+            double perpendicularM = -1/angObj;
+            outputX = Math.sqrt(Math.pow(repelF,2)/(Math.pow(perpendicularM,2)+1));
+            outputY = outputX * perpendicularM;
+        }
+
+        double tmpX = momentum[0] + outputX+outputX*bounce;
+        double tmpY = momentum[1] + outputY+outputY*bounce;
+
+        if(Math.sqrt(Math.pow(tmpX,2)+Math.pow(tmpY,2)) - momentumForce > 1){
+            momentum[0] -= (float) (outputX+outputX*bounce);
+            momentum[1] -= (float) (outputY+outputY*bounce);
+        }else {
+            momentum[0] += (float) (outputX+outputX*bounce);
+            momentum[1] += (float) (outputY+outputY*bounce);
+        }
+    }
+
 
     public float[] getCenter(){
         return new float[]{position[0]+(float)size[0]/2,position[1]+(float)size[1]/2};
@@ -236,44 +205,64 @@ public class Objecto2 {
         }
     }
 
-    private void adjustPosition(Objecto2 o, int colDirection, float[] f1, float[] f2 ){
-        switch (colDirection) {
-            case 1: // io arrivo da sopra
-                if(o.static_){
+    public void adjustPosition(Objecto o){
+        float[] center = getCenter();
 
-                    float f = Math.abs(f1[1]-f2[1]);
-                    if(debug) System.out.println("sistemato di "+f+"?");
-                    position[1] -= f;
-                }
-                break;
-            case 2: // io arrivo da destra
-                if(o.static_){
+        float lineM = (o.position[1]-o.size[1])/(o.position[0]-o.size[0]);//coefficiente angolare retta
+        float lineQ = o.position[1]-lineM*o.position[0];//termine noto retta
+        //System.out.println(getVelocity() + " [ENTER] --> "+getMomentum()+"; "+lineM+"x+"+lineQ);
 
-                    float f = Math.abs(f1[0]-f2[0]);
-                    if(debug){
-                        System.out.println("sistemato di "+f+"?");
-                    }
-                    position[0] += f;
-                }
-                break;
-            case 3: // io arrivo da giu
-                if(o.static_){
-
-                    float f = Math.abs(f1[1]-f2[1]);
-                    if(debug){
-                        System.out.println("sistemato di "+f+"?");
-
-                    }
-                    position[1] += f;
-                }
-                break;
-            case 4: // io arrivo da sinistra
-                if(o.static_){
-
-                    float f = Math.abs(f1[0]-f2[0]);
-                    if (debug) System.out.println("sistemato di "+f+"?");
-                    position[0] -= f;
-                }
+        float[] angPos;
+        if(Double.isInfinite(lineM)){
+            if(o.position[0]>center[0]){
+                angPos = getAnglePos(1);
+            }else{
+                angPos = getAnglePos(3);
+            }
+        }else if(center[1]>=lineM*center[0]+lineQ){ //vuol dire che sta sotto alla linea
+            if(lineM>=0){ //angolo alto destra
+                angPos = getAnglePos(1);
+            }else{ //angolo alto sinistra
+                angPos = getAnglePos(4);
+            }
+        }else{ //vuol dire che sta sopra alla linea
+            if(lineM>=0){ //angolo basso sinistra
+                angPos = getAnglePos(3);
+            }else{ // angolo basso destra
+                angPos = getAnglePos(2);
+            }
         }
+        float momentumM = momentum[1]/momentum[0];
+        float momentumQ = angPos[1]-momentumM*angPos[0];
+        if(lineM-momentumM == 0){
+            return;
+        }
+        float incidentX;
+        float incidentY;
+        if(Double.isInfinite(lineM)){
+            System.out.println("fixed");
+            incidentX = o.position[0];
+        }else{
+            incidentX = (momentumQ-lineQ)/(lineM-momentumM);
+        }
+        incidentY = momentumM*incidentX + momentumQ;
+        System.out.println(lineM+"----->"+(incidentX)+";"+incidentY);
+
+        System.out.println("\t "+getPosition());
+
+        position[0] -= angPos[0]-incidentX;
+        position[1] -= angPos[1]-incidentY;
+        System.out.println("\t "+getPosition());
+    }
+
+    public String getMomentum(){
+        return "["+momentum[0]+";"+momentum[1]+"]";
+    }
+    public String getPosition(){
+        return "["+position[0]+";"+position[1]+"]";
+    }
+    public double getVelocity(){
+        return Math.sqrt(Math.pow(momentum[0],2)+Math.pow(momentum[1],2));
     }
 }
+

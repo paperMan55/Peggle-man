@@ -28,18 +28,17 @@ public class StupidBounces {
         objs.add(new Objecto(290,350,100,360,Objecto.LINE,Color.BLACK,true));
         objs.add(new Objecto(150,150,100,360,Objecto.LINE,Color.BLACK,true));
 
- */
-        objs.add(new Objecto(0,400,1000,6,Objecto.SQUARE,Color.BLACK,true));
-        objs.add(new Objecto(0,0,6,400,Objecto.SQUARE,Color.BLACK,true));
-        objs.add(new Objecto(500,0,6,400,Objecto.SQUARE,Color.BLACK,true));
+*/
 
-        Objecto o = new Objecto(240,200,50,50,Objecto.IMAGE,Color.BLACK,true, false);
+        objs.add(new Objecto(200,160,50,50,Objecto.OVAL,Color.BLACK,true,true));
+        Objecto o = new Objecto(200,0,50,50,Objecto.OVAL,Color.GREEN,true, false);
         o.bounce = 1f;
         o.gravity = 5f;
         o.drag= 0f;
         o.debug=false;
-        o.momentum[0]= -100;
+        o.momentum[0]= 1;
         o.momentum[1]= 0;
+
 /*
         Objecto u = new Objecto(150,200,50,50,Objecto.IMAGE,Color.BLACK,true, false);
         u.bounce = 1f;
@@ -49,7 +48,7 @@ public class StupidBounces {
         u.momentum[0]= -18;
         u.momentum[1]= 0;
 
- */
+*/
 
         try{
             o.image = ImageIO.read(new File("src/DVD_video_logo.png"));
@@ -100,7 +99,7 @@ public class StupidBounces {
             o.update();
         }
     }
-    /*
+/*
     public void hahaha(){
         Gson g = new Gson();
         String s = g.toJson(objs.get(0));
@@ -110,7 +109,7 @@ public class StupidBounces {
         ArrayList<Objecto> readed = g.fromJson(s,t);
     }
 
-     */
+*/
     public ArrayList<Objecto> getObjs(){
         return objs;
     }
