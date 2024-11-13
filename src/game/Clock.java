@@ -1,4 +1,4 @@
-import java.sql.Timestamp;
+package game;
 
 public class Clock extends Thread {
     private static Disegno d;

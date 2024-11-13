@@ -1,3 +1,5 @@
+package game;
+
 public class Collision {
     public float[] normal;
     public float[] pos;

@@ -1,9 +1,7 @@
-import org.w3c.dom.css.*;
+package game;
 
-import javax.naming.NameNotFoundException;
 import java.awt.*;
 
-import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.lang.*;
 

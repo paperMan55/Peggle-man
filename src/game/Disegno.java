@@ -1,8 +1,7 @@
+package game;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageProducer;
 import java.util.ArrayList;
 
 public class Disegno extends JPanel {
