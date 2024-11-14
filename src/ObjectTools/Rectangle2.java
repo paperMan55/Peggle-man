@@ -1,7 +1,5 @@
 package ObjectTools;
 
-import game.Objecto;
-
 import java.awt.*;
 
 public class Rectangle2 extends Objecto2{

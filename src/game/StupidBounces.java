@@ -1,6 +1,6 @@
 package game;
 
-import ObjectTools.Objecto2;
+import ObjectTools.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,25 +12,20 @@ import java.util.ArrayList;
 
 
 public class StupidBounces {
-    public static ArrayList<Objecto> objs;
-    public static ArrayList<Objecto2> objs2;
     private static JLabel b;
     private static JSlider s;
     public static void main(String[] args) {
 
-        objs = new ArrayList<>();
         //classe che contiene posizione e grandezza dell oggetto
-/*
-        objs.add(new Objecto(150,150,300,140,Objecto.LINE,Color.BLACK,true));
-        objs.add(new Objecto(300,140,370,300,Objecto.LINE,Color.BLACK,true));
-        objs.add(new Objecto(370,300,290,350,Objecto.LINE,Color.BLACK,true));
-        objs.add(new Objecto(290,350,100,360,Objecto.LINE,Color.BLACK,true));
-        objs.add(new Objecto(150,150,100,360,Objecto.LINE,Color.BLACK,true));
 
-*/
+        ObjectList.objects.add(new Line2(150,150,300,140,Color.BLACK,true));
+        ObjectList.objects.add(new Line2(300,140,370,300,Color.BLACK,true));
+        ObjectList.objects.add(new Line2(370,300,290,350,Color.BLACK,true));
+        ObjectList.objects.add(new Line2(290,350,100,360,Color.BLACK,true));
+        ObjectList.objects.add(new Line2(150,150,100,360,Color.BLACK,true));
 
-        objs.add(new Objecto(200,160,50,50,Objecto.OVAL,Color.BLACK,true,true));
-        Objecto o = new Objecto(200,0,50,50,Objecto.OVAL,Color.GREEN,true, false);
+
+        Objecto2 o = new Image2(200,260,50,50,Color.GREEN,true, false);
         o.bounce = 1f;
         o.gravity = 5f;
         o.drag= 0f;
@@ -50,13 +45,14 @@ public class StupidBounces {
 */
 
         try{
-            o.image = ImageIO.read(new File("src/DVD_video_logo.png"));
+            o.image = ImageIO.read(new File("src/game/DVD_video_logo.png"));
             //u.image = ImageIO.read(new File("src/DVD_video_logo.png"));
 
         }catch (Exception a){
             System.out.println("boh");
         }
-        objs.add(o);
+
+        ObjectList.objects.add(o);
         //objs.add(u);
         JFrame f = new JFrame("antonio");
 
@@ -64,7 +60,7 @@ public class StupidBounces {
         //Toolkit.getDefaultToolkit().getScreenSize().width,Toolkit.getDefaultToolkit().getScreenSize().height
         f.setSize(900,900);
 
-        Disegno p = new Disegno(objs);
+        Disegno p = new Disegno();
 
         b = new JLabel("boh");
         b.setSize(300,20);
@@ -94,7 +90,7 @@ public class StupidBounces {
             b.setText("fps: "+Math.round(1/Clock.deltaTime));
             exMillis = System.currentTimeMillis();
         }
-        for (Objecto o:objs ) {
+        for (Objecto2 o:ObjectList.objects ) {
             o.update();
         }
 
@@ -110,11 +106,5 @@ public class StupidBounces {
     }
 
 */
-    public ArrayList<Objecto> getObjs(){
-        return objs;
-    }
-    public ArrayList<Objecto2> getObjs2(){
-        return objs2;
-    }
 
 }

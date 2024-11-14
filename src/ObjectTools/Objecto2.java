@@ -1,8 +1,6 @@
 package ObjectTools;
 
 import game.Clock;
-import game.Objecto;
-import game.StupidBounces;
 
 import java.awt.*;
 
@@ -88,10 +86,10 @@ public abstract class Objecto2 {
         for (Objecto2 o:objs) {
             if(!o.equals(this)){
                 switch (o.type){
-                    case Objecto.LINE:
+                    case Objecto2.LINE:
                         collideWithLine(o);
                         break;
-                    case Objecto.OVAL:
+                    case Objecto2.OVAL:
                         collideWithCircle(o);
                         break;
                     default:

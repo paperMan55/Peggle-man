@@ -1,36 +1,34 @@
 package game;
 
+import ObjectTools.ObjectList;
+import ObjectTools.Objecto2;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Disegno extends JPanel {
-    private ArrayList<Objecto> objects;
     public static ArrayList<float[]> pointDebuggers = new ArrayList<>();
-    public Disegno(ArrayList<Objecto> objects) {
-        super();
-        this.objects = objects;
-    }
     public void paint(Graphics g){
         Toolkit.getDefaultToolkit().sync(); // altrimenti lagga in linux
         super.paint(g);
 
-        for (Objecto o:objects) {
+        for (Objecto2 o: ObjectList.objects) {
             g.setColor(o.color);
             switch (o.type){
-                case Objecto.LINE:
+                case Objecto2.LINE:
 
                     g.drawLine(Math.round(o.position[0]),Math.round(o.position[1]),Math.round(o.size[0]),Math.round(o.size[1]));
                     break;
-                case Objecto.SQUARE:
+                case Objecto2.SQUARE:
                     g.fillRect(Math.round(o.position[0]),Math.round(o.position[1]),Math.round(o.size[0]),Math.round(o.size[1]));
 
                     break;
-                case Objecto.OVAL:
+                case Objecto2.OVAL:
                     g.fillOval(Math.round(o.position[0]),Math.round(o.position[1]),Math.round(o.size[0]),Math.round(o.size[1]));
 
                     break;
-                case Objecto.IMAGE:
+                case Objecto2.IMAGE:
                     g.drawImage(o.image,Math.round(o.position[0]),Math.round(o.position[1]),this);
                     break;
             }

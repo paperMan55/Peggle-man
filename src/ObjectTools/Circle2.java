@@ -5,18 +5,22 @@ import java.awt.*;
 public class Circle2 extends Objecto2{
     public Circle2(float posX, float posY, float diameter) {
         super(posX, posY, diameter, diameter);
+        type = Objecto2.OVAL;
     }
 
     public Circle2(float posX, float posY, float diameter, Color color) {
         super(posX, posY, diameter, diameter, color);
+        type = Objecto2.OVAL;
     }
 
     public Circle2(float posX, float posY, float diameter, Color color, boolean solid) {
         super(posX, posY, diameter, diameter, color, solid);
+        type = Objecto2.OVAL;
     }
 
     public Circle2(float posX, float posY, float diameter, Color color, boolean solid, boolean static_) {
         super(posX, posY, diameter, diameter, color, solid, static_);
+        type = Objecto2.OVAL;
     }
 
     @Override

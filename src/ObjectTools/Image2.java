@@ -3,8 +3,25 @@ package ObjectTools;
 import java.awt.*;
 
 public class Image2 extends Objecto2{
+
+    public Image2(float posX, float posY, float width, float height, Color color) {
+        super(posX, posY, width, height, color);
+        type = Objecto2.IMAGE;
+    }
+
+    public Image2(float posX, float posY, float width, float height, Color color, boolean solid) {
+        super(posX, posY, width, height, color, solid);
+        type = Objecto2.IMAGE;
+    }
+
+    public Image2(float posX, float posY, float width, float height, Color color, boolean solid, boolean static_) {
+        super(posX, posY, width, height, color, solid, static_);
+        type = Objecto2.IMAGE;
+    }
     public Image2(int posX, int posY, float width, float height, Image image) {
         super(posX, posY, width, height, image);
+        type = Objecto2.IMAGE;
+
     }
 
     @Override
