@@ -116,14 +116,17 @@ public class Objecto {
                     double moveY = Math.sqrt(Math.pow(toMove,2)-Math.pow(moveX,2));
                     System.out.println("distance: "+toMove);
                     System.out.println("["+moveX+";"+moveY+"]");
-                    if(getCenter()[0]>o.getCenter()[0]){
+                    if(getCenter()[0]<o.getCenter()[0]){
                         position[0] += moveX;
                         position[1] += moveY;
+                        System.out.println("aggiunto ["+moveX+";"+moveY+"]");
                     }else {
                         position[0] -= moveX;
                         position[1] -= moveY;
+                        System.out.println("tolto ["+moveX+";"+moveY+"]");
                     }
                     resolveBounce(momentum[1]/momentum[0],-1/lineM);
+                    System.out.println("  -> "+getMomentum());
                 }
             }
         }

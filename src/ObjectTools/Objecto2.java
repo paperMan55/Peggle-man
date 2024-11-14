@@ -56,7 +56,7 @@ public abstract class Objecto2 {
         this.color = color;
         this.solid = solid;
     }
-    public Objecto2(int posX, int posY, int width, int height, Image image){
+    public Objecto2(int posX, int posY, float width, float height, Image image){
         this.image = image;
         position = new float[]{posX, posY};
         size = new float[]{width,height};
