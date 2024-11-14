@@ -72,7 +72,7 @@ static BufferedImage backgroundImage;
     public static void createWindow(){
         thisframe= new JFrame("diocanvuoifunzionarediocandiocan");
         thisframe.setSize(window_lenght, 900);
-        thisdisegno = new Disegno(new ArrayList<>());
+        thisdisegno = new Disegno();
         thisframe.add(thisdisegno);
 
         thisframe.setVisible(true);
