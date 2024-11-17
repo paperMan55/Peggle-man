@@ -27,10 +27,10 @@ public class StupidBounces {
 
         Objecto2 o = new Image2(200,260,50,50,Color.GREEN,true, false);
         o.bounce = 1f;
-        o.gravity = 5f;
+        o.gravity = 0f;
         o.drag= 0f;
         o.debug=false;
-        o.momentum[0]= 1;
+        o.momentum[0]= 120;
         o.momentum[1]= 0;
 
 /*
