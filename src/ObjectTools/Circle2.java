@@ -2,6 +2,7 @@ package ObjectTools;
 
 import java.awt.*;
 
+
 public class Circle2 extends Objecto2{
     public Circle2(float posX, float posY, float diameter) {
         super(posX, posY, diameter, diameter);

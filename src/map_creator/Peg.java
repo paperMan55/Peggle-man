@@ -1,29 +1,26 @@
 package map_creator;
 
-public class Peg{
+import ObjectTools.Circle2;
+
+public class Peg extends Circle2 {
     /*
     - il colore rosso è 1
     - il colore blue è 2
 
     * */
-    private int[] position;
-    private int  color;
-    public Peg(int x, int y, int colorcod){
-        this.position= new int[]{x, y};
-        this.color=colorcod;
+    //private int[] position;
+    private int  colorcod;
+    final static float SIZE=20;
+
+
+    public Peg(float x, float y, int colorcod){
+        super(x, y, SIZE);
+        //this.position= new int[]{x, y};
+        this.colorcod=colorcod;
     }
 
     public int getColor() {
-        return color;
+        return colorcod;
     }
 
-    public int[] getPosition() {
-        return position;
-    }
-    public int getY(){
-        return position[1];
-    }
-    public int getX(){
-        return position[0];
-    }
 }

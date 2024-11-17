@@ -28,6 +28,7 @@ public abstract class Objecto2 {
     public boolean solid;
     private ArrayList<Objecto2> objs;
 
+
     //questa classe permetterà una gestione facilitata degli oggetti con attributi tipo posizione e grandezza
     public Objecto2(float posX, float posY, float width, float height) {
         init(posX,posY,width,height,new Color(0x000000),true,true);

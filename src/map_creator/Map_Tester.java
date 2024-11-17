@@ -1,5 +1,6 @@
 package map_creator;
 import game.Disegno;
+import game.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 
 
 public class Map_Tester {
-final static int window_lenght=900;
+final static int window_width=900;
 final static int window_height=900;
 
 static JFrame thisframe;
@@ -20,26 +21,29 @@ static Disegno thisdisegno;
 static String imagename= "prova2.png";
 static BufferedImage backgroundImage;
 
+public Map_Tester(){
+    createWindow();
+
+    thisframe.setContentPane(new JPanel(){
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            try {
+                backgroundImage= ImageIO.read(new File("src/map_creator/Images/"+imagename));
+                g.drawImage(backgroundImage, 0, 0, null);
+
+                //System.out.println(backgroundImage.getType());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            scanningImage(backgroundImage);
+
+        }
+    });
+}
     public static void main(String[] args) {
-        createWindow();
 
-            thisframe.setContentPane(new JPanel(){
-                @Override
-                public void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-
-                    try {
-                        backgroundImage= ImageIO.read(new File("src/map_creator/Images/"+imagename));
-                        g.drawImage(backgroundImage, 0, 0, null);
-
-                        //System.out.println(backgroundImage.getType());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    scanningImage(backgroundImage);
-
-                }
-            });
 
     }
     public static void scanningImage(BufferedImage imagetoscan){
@@ -53,15 +57,21 @@ static BufferedImage backgroundImage;
                 }
                 else if(colortoscan==Color.BLACK.getRGB()){
                     System.out.println("Rilevato pixel nero");
+                    float posX= (float) (j * window_width) / imagetoscan.getWidth();
+                    float posY = (float) (i*window_height) / imagetoscan.getHeight();
                     listaPeg.add(new Peg(j,i, colortoscan));
                 }
                 else if (colortoscan==Color.BLUE.getRGB()){
                     System.out.println("Rilevato pixel blu");
-                    listaPeg.add(new Peg(j,i, colortoscan));
+                    float posX= (float) (j * window_width) / imagetoscan.getWidth();
+                    float posY = (float) (i*window_height) / imagetoscan.getHeight();
+                    listaPeg.add(new Peg(posX,posY, colortoscan));
 
                 }
                 else if(colortoscan==Color.RED.getRGB()){
                     System.out.println("Rilevato pixel rosso");
+                    float posX= (float) (j * window_width) / imagetoscan.getWidth();
+                    float posY = (float) (i*window_height) / imagetoscan.getHeight();
                     listaPeg.add(new Peg(j,i, colortoscan));
 
                 }
@@ -71,11 +81,14 @@ static BufferedImage backgroundImage;
     }
     public static void createWindow(){
         thisframe= new JFrame("diocanvuoifunzionarediocandiocan");
-        thisframe.setSize(window_lenght, 900);
+        thisframe.setSize(window_width, window_height);
         thisdisegno = new Disegno();
         thisframe.add(thisdisegno);
 
         thisframe.setVisible(true);
     }
+    public static Map createdefinitiveMap(ArrayList<Peg> listaPegs){
 
+        return new Map (listaPegs);
+    }
 }
