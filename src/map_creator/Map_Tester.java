@@ -20,10 +20,22 @@ static JFrame thisframe;
 static Disegno thisdisegno;
 static String imagename= "prova2.png";
 static BufferedImage backgroundImage;
-
+public static ArrayList<Peg> listapeg;
 public Map_Tester(){
-    createWindow();
+    //createWindow();
+    try {
+        backgroundImage= ImageIO.read(new File("src/map_creator/Images/"+imagename));
+        //g.drawImage(backgroundImage, 0, 0, null);
 
+        //System.out.println(backgroundImage.getType());
+        scanningImage(backgroundImage);
+        //thisdisegno.repaint();
+    } catch (IOException e) {
+        throw new RuntimeException(e);
+    }
+
+
+/*
     thisframe.setContentPane(new JPanel(){
         @Override
         public void paintComponent(Graphics g) {
@@ -37,15 +49,14 @@ public Map_Tester(){
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            scanningImage(backgroundImage);
+
 
         }
     });
+
+ */
+
 }
-    public static void main(String[] args) {
-
-
-    }
     public static void scanningImage(BufferedImage imagetoscan){
         ArrayList<Peg> listaPeg= new ArrayList<>();/*il primo int è il colore del peg, il secondo int è la y, il terzo int è la x */
 
@@ -59,7 +70,7 @@ public Map_Tester(){
                     System.out.println("Rilevato pixel nero");
                     float posX= (float) (j * window_width) / imagetoscan.getWidth();
                     float posY = (float) (i*window_height) / imagetoscan.getHeight();
-                    listaPeg.add(new Peg(j,i, colortoscan));
+                    listaPeg.add(new Peg(posX,posY, colortoscan));
                 }
                 else if (colortoscan==Color.BLUE.getRGB()){
                     System.out.println("Rilevato pixel blu");
@@ -72,12 +83,14 @@ public Map_Tester(){
                     System.out.println("Rilevato pixel rosso");
                     float posX= (float) (j * window_width) / imagetoscan.getWidth();
                     float posY = (float) (i*window_height) / imagetoscan.getHeight();
-                    listaPeg.add(new Peg(j,i, colortoscan));
-
+                    listaPeg.add(new Peg(posX,posY, colortoscan));
                 }
 
             }
+
+
         }
+        listapeg=listaPeg;
     }
     public static void createWindow(){
         thisframe= new JFrame("diocanvuoifunzionarediocandiocan");
@@ -87,8 +100,14 @@ public Map_Tester(){
 
         thisframe.setVisible(true);
     }
+
+    public static ArrayList<Peg> getListapeg() {
+        return listapeg;
+    }
+
     public static Map createdefinitiveMap(ArrayList<Peg> listaPegs){
 
         return new Map (listaPegs);
     }
 }
+
