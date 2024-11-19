@@ -53,7 +53,8 @@ public abstract class Objecto2 {
         bounce = 0f;
         this.static_ = static_;
         this.color = color;
-        this.solid = solid;
+        this.solid = solid;//hello
+        
     }
     public Objecto2(int posX, int posY, float width, float height, Image image){
         this.image = image;
