@@ -31,17 +31,13 @@ public class Circle2 extends Objecto2{
             if(distance<size[0]/2+o.size[0]/2){
                 double toMove = (size[0]/2+o.size[0]/2) -distance;
                 float lineM = (getCenter()[1]-o.getCenter()[1])/(getCenter()[0]-o.getCenter()[0]);
-                double moveX = (toMove/Math.sqrt(Math.pow(lineM,2)+1));
+                double moveX = Math.abs((toMove/Math.sqrt(Math.pow(lineM,2)+1)));
                 double moveY = Math.sqrt(Math.pow(toMove,2)-Math.pow(moveX,2));
                 System.out.println("distance: "+toMove);
                 System.out.println("["+moveX+";"+moveY+"]");
-                if(getCenter()[0]>o.getCenter()[0]){ //non funzia ☺
-                    position[0] += moveX;
-                    position[1] += moveY;
-                }else {
-                    position[0] -= moveX;
-                    position[1] -= moveY;
-                }
+                position[0] += (momentum[0]>0?-moveX:moveX);
+                position[1] += (momentum[1]>0?-moveY:moveY);
+
                 resolveBounce(momentum[1]/momentum[0],-1/lineM);
                 System.out.println("  -> "+getMomentum());
             }

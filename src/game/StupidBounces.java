@@ -18,19 +18,14 @@ public class StupidBounces {
 
         //classe che contiene posizione e grandezza dell oggetto
 
-        ObjectList.objects.add(new Line2(150,150,300,140,Color.BLACK,true));
-        ObjectList.objects.add(new Line2(300,140,370,300,Color.BLACK,true));
-        ObjectList.objects.add(new Line2(370,300,290,350,Color.BLACK,true));
-        ObjectList.objects.add(new Line2(290,350,100,360,Color.BLACK,true));
-        ObjectList.objects.add(new Line2(150,150,100,360,Color.BLACK,true));
+        ObjectList.objects.add(new Circle2(300,200,100,Color.BLACK));
 
 
-        Objecto2 o = new Image2(200,260,50,50,Color.GREEN,true, false);
+        Objecto2 o = new Circle2(150,200,50,Color.GREEN,true, false);
         o.bounce = 1f;
-        o.gravity = 0f;
-        o.drag= 0f;
-        o.debug=false;
-        o.momentum[0]= 120;
+        o.gravity = 5f;
+        o.drag = 0f;
+        o.momentum[0]= 150;
         o.momentum[1]= 0;
 
 /*
@@ -41,7 +36,6 @@ public class StupidBounces {
         u.debug=false;
         u.momentum[0]= -18;
         u.momentum[1]= 0;
-
 */
 
         try{
@@ -67,7 +61,7 @@ public class StupidBounces {
         b.setLocation(10,10);
 
         s = new JSlider();
-        s.setValue(60);
+        s.setValue(5);
         s.setMaximum(60);
         s.setMinimum(1);
         s.setSize(300,20);
@@ -93,7 +87,7 @@ public class StupidBounces {
         for (Objecto2 o:ObjectList.objects ) {
             o.update();
         }
-
+        
     }
 /*
     public void hahaha(){
