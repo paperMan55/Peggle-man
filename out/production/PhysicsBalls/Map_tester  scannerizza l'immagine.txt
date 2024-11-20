@@ -1,0 +1,3 @@
+Map_tester : scannerizza l'immagine in inputb, ne ricava una lista di Peg(oggetti non visibili) per poi passarli a Map, che creerà la finestra
+
+e aggiongerà gli oggetti a ObjectlistTool

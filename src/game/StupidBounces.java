@@ -73,9 +73,11 @@ public class StupidBounces {
         f.add(p);
         f.setVisible(true);
 
-        //permette l'aggiornamento del Panel in automatico
+        /*permette l'aggiornamento del Panel in automatico
         Clock clock = new Clock(p);
         clock.start();
+
+         */
     }
     private long exMillis = System.currentTimeMillis();
     public void update(){

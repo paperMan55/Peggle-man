@@ -12,9 +12,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
+
+
 public class Map_Tester {
-final static int window_width=900;
-final static int window_height=900;
+
 
 static JFrame thisframe;
 static Disegno thisdisegno;
@@ -68,21 +69,21 @@ public Map_Tester(){
                 }
                 else if(colortoscan==Color.BLACK.getRGB()){
                     System.out.println("Rilevato pixel nero");
-                    float posX= (float) (j * window_width) / imagetoscan.getWidth();
-                    float posY = (float) (i*window_height) / imagetoscan.getHeight();
+                    float posX= (float) (j * Map.window_width) / imagetoscan.getWidth();
+                    float posY = (float) (i*Map.window_height) / imagetoscan.getHeight();
                     listaPeg.add(new Peg(posX,posY, colortoscan));
                 }
                 else if (colortoscan==Color.BLUE.getRGB()){
                     System.out.println("Rilevato pixel blu");
-                    float posX= (float) (j * window_width) / imagetoscan.getWidth();
-                    float posY = (float) (i*window_height) / imagetoscan.getHeight();
+                    float posX= (float) (j * Map.window_width) / imagetoscan.getWidth();
+                    float posY = (float) (i*Map.window_height) / imagetoscan.getHeight();
                     listaPeg.add(new Peg(posX,posY, colortoscan));
 
                 }
                 else if(colortoscan==Color.RED.getRGB()){
                     System.out.println("Rilevato pixel rosso");
-                    float posX= (float) (j * window_width) / imagetoscan.getWidth();
-                    float posY = (float) (i*window_height) / imagetoscan.getHeight();
+                    float posX= (float) (j * Map.window_width) / imagetoscan.getWidth();
+                    float posY = (float) (i*Map.window_height) / imagetoscan.getHeight();
                     listaPeg.add(new Peg(posX,posY, colortoscan));
                 }
 
@@ -94,7 +95,7 @@ public Map_Tester(){
     }
     public static void createWindow(){
         thisframe= new JFrame("diocanvuoifunzionarediocandiocan");
-        thisframe.setSize(window_width, window_height);
+        thisframe.setSize(Map.window_width, Map.window_height);
         thisdisegno = new Disegno();
         thisframe.add(thisdisegno);
 
