@@ -107,4 +107,7 @@ public class Image2 extends Objecto2{
         position[1] -= angPos[1]-incidentY;
         System.out.println("\t "+getPosition());
     }
+
+	@Override
+	public void onCollisionEnter(Objecto2 o) {}
 }

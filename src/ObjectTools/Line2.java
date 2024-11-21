@@ -37,4 +37,7 @@ public class Line2 extends Objecto2{
     public void adjustPosition(Objecto2 o) {
         //I decided that lines cant move so... non need of this
     }
+
+	@Override
+	public void onCollisionEnter(Objecto2 o) {}
 }

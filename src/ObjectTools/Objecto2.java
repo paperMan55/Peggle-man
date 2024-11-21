@@ -70,15 +70,13 @@ public abstract class Objecto2 {
     }
 
     public void update(){
-        if (static_) return;
+        if (!static_){
+            momentum[0] -= momentum[0] * (drag);
+            momentum[1] -= (float) (momentum[1] * (drag) - gravity* Clock.deltaTime* 100);
 
-        momentum[0] -= momentum[0] * (drag);
-        momentum[1] -= (float) (momentum[1] * (drag) - gravity* Clock.deltaTime* 100);
-
-        this.position[0] += (float) (momentum[0]* Clock.deltaTime);
-        this.position[1] += (float) (momentum[1]* Clock.deltaTime);
-
-        ArrayList<Integer> cols = new ArrayList<>();
+            this.position[0] += (float) (momentum[0]* Clock.deltaTime);
+            this.position[1] += (float) (momentum[1]* Clock.deltaTime);
+        }
 
         if(solid){
             checkCollision();
@@ -87,16 +85,20 @@ public abstract class Objecto2 {
     public void checkCollision(){
         for (Objecto2 o:objs) {
             if(!o.equals(this)){
-                switch (o.type){
-                    case Objecto2.LINE:
-                        collideWithLine(o);
-                        break;
-                    case Objecto2.OVAL:
-                        collideWithCircle(o);
-                        break;
-                    default:
-                        collideWithSquare(o);
+                if(!static_){
+                    switch (o.type){
+                        case Objecto2.LINE:
+                            collideWithLine(o);
+                            break;
+                        case Objecto2.OVAL:
+                            collideWithCircle(o);
+                            break;
+                        default:
+                            collideWithSquare(o);
+                    }
                 }
+                
+            onCollisionEnter(o);
             }
         }
     }
@@ -175,6 +177,8 @@ public abstract class Objecto2 {
 
     public abstract void adjustPosition(Objecto2 o);
 
+    public abstract void onCollisionEnter(Objecto2 o);
+
     public String getMomentum(){
         return "["+momentum[0]+";"+momentum[1]+"]";
     }
@@ -183,6 +187,10 @@ public abstract class Objecto2 {
     }
     public double getVelocity(){
         return Math.sqrt(Math.pow(momentum[0],2)+Math.pow(momentum[1],2));
+    }
+
+    public boolean destroy(){
+        return ObjectList.objects.remove(this);
     }
 }
 

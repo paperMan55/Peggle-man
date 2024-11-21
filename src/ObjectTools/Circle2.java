@@ -71,7 +71,8 @@ public class Circle2 extends Objecto2{
     }
 
     @Override
-    public void adjustPosition(Objecto2 o) {
+    public void adjustPosition(Objecto2 o) {}
 
-    }
+	@Override
+	public void onCollisionEnter(Objecto2 o) {}
 }

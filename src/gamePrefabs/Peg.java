@@ -1,6 +1,7 @@
-package map_creator;
+package gamePrefabs;
 
 import ObjectTools.Circle2;
+import ObjectTools.Objecto2;
 
 public class Peg extends Circle2 {
     /*
@@ -22,5 +23,10 @@ public class Peg extends Circle2 {
     public int getColor() {
         return colorcod;
     }
+    @Override
+    public void onCollisionEnter(Objecto2 o){
+        destroy();
+    }
 
 }
+

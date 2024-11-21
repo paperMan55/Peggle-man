@@ -3,7 +3,7 @@ package game;
 import ObjectTools.Circle2;
 import ObjectTools.ObjectList;
 import ObjectTools.Objecto2;
-import map_creator.Peg;
+import gamePrefabs.*;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,7 +1,7 @@
 package map_creator;
 import game.Disegno;
 import game.Map;
-
+import gamePrefabs.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;

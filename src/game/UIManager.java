@@ -5,8 +5,8 @@ import java.awt.*;
 
 public class UIManager{
     private JFrame finestraGioco;
-    private final int WINDOWS_HEIGHT=1200;
-    private final int WINDOWS_width=900;
+    private final int WINDOWS_HEIGHT=900;
+    private final int WINDOWS_width=1200;
 
     private JPanel panel;
     public UIManager(String nameofFrame){
@@ -18,8 +18,14 @@ public class UIManager{
         finestraGioco.setVisible(true);
         finestraGioco.setLayout(null);
     }
-    private void addiingComponent(JComponent componenToAdd){
+    public void addingComponent(JComponent componenToAdd){
         this.finestraGioco.add(componenToAdd);
-
+        
+    }
+    public int getWINDOWS_HEIGHT() {
+        return WINDOWS_HEIGHT;
+    }
+    public int getWINDOWS_width() {
+        return WINDOWS_width;
     }
 }
