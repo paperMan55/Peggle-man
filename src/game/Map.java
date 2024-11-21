@@ -1,6 +1,7 @@
 package game;
 
 import ObjectTools.Circle2;
+import ObjectTools.Collision;
 import ObjectTools.ObjectList;
 import ObjectTools.Objecto2;
 import gamePrefabs.*;
@@ -63,6 +64,14 @@ public class Map {//sta classe non serve
             o.update();
         }
 
+        /*
+        risolvo le collisioni solo dopo aver controllato tutti gli oggetti altrimenti
+        solo uno dei due oggetti che collidono vede la collisione
+         */
+        for(Collision c:ObjectList.collisions){
+            c.resolve();
+        }
+        ObjectList.collisions.clear();
     }
 
 }

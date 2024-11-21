@@ -25,40 +25,42 @@ public class Image2 extends Objecto2{
     }
 
     @Override
-    public void collideWithCircle(Objecto2 o) {
-
+    public boolean collideWithCircle(Objecto2 o) {
+        return false;
     }
 
     @Override
-    public void collideWithSquare(Objecto2 o) {
+    public boolean collideWithSquare(Objecto2 o) {
 
         Rectangle this_ = new Rectangle(Math.round(position[0]),Math.round(position[1]),(int)size[0],(int)size[1]);
         Rectangle other = new Rectangle(Math.round(o.position[0]),Math.round(o.position[1]),(int)o.size[0],(int)o.size[1]);
         //b  = se due oggetti si toccano
         if(!o.solid || !this_.intersects(other)){
-            return;
+            return false;
         }
-        collideWithLine(new Line2(o.position[0],o.position[1],o.position[0]+o.size[0],o.position[1]));
-        collideWithLine(new Line2(o.position[0],o.position[1],o.position[0],o.position[1]+o.size[1]));
-        collideWithLine(new Line2(o.position[0]+o.size[0],o.position[1],o.position[0]+o.size[0],o.position[1]+o.size[1]));
-        collideWithLine(new Line2(o.position[0],o.position[1]+o.size[1],o.position[0]+o.size[0],o.position[1]));
+        boolean res = collideWithLine(new Line2(o.position[0],o.position[1],o.position[0]+o.size[0],o.position[1]));
+        res = res || collideWithLine(new Line2(o.position[0],o.position[1],o.position[0],o.position[1]+o.size[1]));
+        res = res || collideWithLine(new Line2(o.position[0]+o.size[0],o.position[1],o.position[0]+o.size[0],o.position[1]+o.size[1]));
+        res = res || collideWithLine(new Line2(o.position[0],o.position[1]+o.size[1],o.position[0]+o.size[0],o.position[1]));
+        return res;
     }
 
     @Override
-    public void collideWithLine(Objecto2 o) {
+    public boolean collideWithLine(Objecto2 o) {
         if(!new Rectangle((int)position[0],(int)position[1],(int)size[0],(int)size[1]).intersectsLine(o.position[0],o.position[1],o.size[0],o.size[1])){
-            return;
+            return false;
         }
 
         float lineM = (o.position[1]-o.size[1])/(o.position[0]-o.size[0]);//coefficiente angolare retta
 
         float momentumM = momentum[1]/momentum[0];
-        adjustPosition(o);
-        resolveBounce(momentumM,lineM);
+        float[] toAdjust = adjustPosition(o);
+        new Collision(this,o,toAdjust, momentumM,lineM);
+        return true;
     }
 
     @Override
-    public void adjustPosition(Objecto2 o) {
+    public float[] adjustPosition(Objecto2 o) {
         float[] center = getCenter();
 
         float lineM = (o.position[1]-o.size[1])/(o.position[0]-o.size[0]);//coefficiente angolare retta
@@ -88,7 +90,7 @@ public class Image2 extends Objecto2{
         float momentumM = momentum[1]/momentum[0];
         float momentumQ = angPos[1]-momentumM*angPos[0];
         if(lineM-momentumM == 0){
-            return;
+            return null;
         }
         float incidentX;
         float incidentY;
@@ -103,9 +105,7 @@ public class Image2 extends Objecto2{
 
         System.out.println("\t "+getPosition());
 
-        position[0] -= angPos[0]-incidentX;
-        position[1] -= angPos[1]-incidentY;
-        System.out.println("\t "+getPosition());
+        return new float[]{-(angPos[0]-incidentX),-(angPos[1]-incidentY)};
     }
 
 	@Override

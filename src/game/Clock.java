@@ -1,5 +1,7 @@
 package game;
 
+import ObjectTools.ObjectList;
+
 public class Clock extends Thread {
     private static Disegno d;
     private static Map m;
@@ -27,6 +29,8 @@ public class Clock extends Thread {
             m.update();
 
             d.repaint();
+            ObjectList.objects.removeAll(ObjectList.deletionQueue); //elimina gli oggetti che vanno eliminati
+            ObjectList.deletionQueue.clear(); //svuota la lista degli oggetti da eliminare
             try {
                 if (fpsLimit > 0) {
                     Thread.sleep(1000 / fpsLimit);

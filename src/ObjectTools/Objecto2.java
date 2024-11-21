@@ -85,33 +85,27 @@ public abstract class Objecto2 {
     public void checkCollision(){
         for (Objecto2 o:objs) {
             if(!o.equals(this)){
-                if(!static_){
-                    switch (o.type){
-                        case Objecto2.LINE:
-                            collideWithLine(o);
-                            break;
-                        case Objecto2.OVAL:
-                            collideWithCircle(o);
-                            break;
-                        default:
-                            collideWithSquare(o);
-                    }
+                switch (o.type){
+                    case Objecto2.LINE:
+                        collideWithLine(o);
+                        break;
+                    case Objecto2.OVAL:
+                        collideWithCircle(o);
+                        break;
+                    default:
+                        collideWithSquare(o);
+
                 }
-                
-            onCollisionEnter(o);
             }
         }
     }
     public void setDrag(float drag){
         this.drag = drag;
     }
-    public void move(float x, float y){
-        this.position[0] += x;
-        this.position[1]+=y;
-    }
-    public abstract void collideWithCircle(Objecto2 o);
-    public abstract void collideWithSquare(Objecto2 o);
-    public abstract void collideWithLine(Objecto2 o);
+
+    public abstract boolean collideWithCircle(Objecto2 o);
+    public abstract boolean collideWithSquare(Objecto2 o);
+    public abstract boolean collideWithLine(Objecto2 o);
     //ang è il coefficiente angolare tra y/x
     public void resolveBounce(float angObj2move,float angObj){
 
@@ -175,7 +169,7 @@ public abstract class Objecto2 {
         }
     }
 
-    public abstract void adjustPosition(Objecto2 o);
+    public abstract float[] adjustPosition(Objecto2 o);
 
     public abstract void onCollisionEnter(Objecto2 o);
 
@@ -190,7 +184,15 @@ public abstract class Objecto2 {
     }
 
     public boolean destroy(){
-        return ObjectList.objects.remove(this);
+        return ObjectList.deletionQueue.add(this);
+    }
+    public void move(float[] toMove){
+        this.position[0] += toMove[0];
+        this.position[1] += toMove[1];
+    }
+    public void move(float x, float y){
+        this.position[0] += x;
+        this.position[1] += y;
     }
 }
 
