@@ -73,10 +73,10 @@ public abstract class Objecto2 {
         if (static_) return;
 
         momentum[0] -= momentum[0] * (drag);
-        momentum[1] -= momentum[1] * (drag) - gravity;
+        momentum[1] -= (float) (momentum[1] * (drag) - gravity* Clock.deltaTime* 100);
 
         this.position[0] += (float) (momentum[0]* Clock.deltaTime);
-        this.position[1] += (float) (momentum[1]*Clock.deltaTime);
+        this.position[1] += (float) (momentum[1]* Clock.deltaTime);
 
         ArrayList<Integer> cols = new ArrayList<>();
 
