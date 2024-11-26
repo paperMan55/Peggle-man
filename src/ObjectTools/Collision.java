@@ -15,11 +15,12 @@ public class Collision {
         this.momentum_ang = momentum_ang;
         this.surface_ang = surface_ang;
 
-        ObjectList.collisions.add(this);
+        ObjectList.collisions.put(main_obj,this);
     }
     public void resolve(){
         main_obj.move(pos_adjust);
         main_obj.resolveBounce(momentum_ang,surface_ang);
         main_obj.onCollisionEnter(second_obj);
+        System.out.println("collisione");
     }
 }

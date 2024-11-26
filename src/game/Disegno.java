@@ -44,5 +44,6 @@ public class Disegno extends JPanel {
         //Image i = Toolkit.getDefaultToolkit().getImage("src/papera1.png");
         //i = i.getScaledInstance(50,50,Image.SCALE_SMOOTH);
         //g.drawImage(i,position[0],position[1],this);
+        Clock.drawFrame(); //pk altrimenti sto metodo e asincrono e crea errori nell esecuzione
     }
 }

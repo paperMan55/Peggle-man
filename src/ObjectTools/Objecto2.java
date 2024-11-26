@@ -78,9 +78,8 @@ public abstract class Objecto2 {
             this.position[1] += (float) (momentum[1]* Clock.deltaTime);
         }
 
-        if(solid){
-            checkCollision();
-        }
+        checkCollision();
+
     }
     public void checkCollision(){
         for (Objecto2 o:objs) {
@@ -94,7 +93,6 @@ public abstract class Objecto2 {
                         break;
                     default:
                         collideWithSquare(o);
-
                 }
             }
         }

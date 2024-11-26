@@ -33,11 +33,8 @@ public class Circle2 extends Objecto2{
                 float lineM = (getCenter()[1]-o.getCenter()[1])/(getCenter()[0]-o.getCenter()[0]);
                 double moveX = Math.abs((toMove/Math.sqrt(Math.pow(lineM,2)+1)));
                 double moveY = Math.sqrt(Math.pow(toMove,2)-Math.pow(moveX,2));
-                System.out.println("distance: "+toMove);
-                System.out.println("["+moveX+";"+moveY+"]");
                 float[] toadjust= new float[]{(float)(momentum[0]>0?-moveX:moveX),(float)(momentum[1]>0?-moveY:moveY)};
                 new Collision(this,o,toadjust,momentum[1]/momentum[0],-1/lineM);
-                System.out.println("  -> "+getMomentum());
                 return true;
             }
         }
@@ -78,6 +75,6 @@ public class Circle2 extends Objecto2{
 
 	@Override
 	public void onCollisionEnter(Objecto2 o) {
-        System.out.println("booom");
+
     }
 }

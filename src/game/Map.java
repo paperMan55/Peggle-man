@@ -68,7 +68,8 @@ public class Map {//sta classe non serve
         risolvo le collisioni solo dopo aver controllato tutti gli oggetti altrimenti
         solo uno dei due oggetti che collidono vede la collisione
          */
-        for(Collision c:ObjectList.collisions){
+
+        for(Collision c:ObjectList.collisions.values()){
             c.resolve();
         }
         ObjectList.collisions.clear();
