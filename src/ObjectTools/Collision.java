@@ -1,5 +1,7 @@
 package ObjectTools;
 
+import java.awt.*;
+
 public class Collision {
     public Objecto2 main_obj;
     public Objecto2 second_obj;
@@ -18,9 +20,13 @@ public class Collision {
         ObjectList.collisions.put(main_obj,this);
     }
     public void resolve(){
-        main_obj.move(pos_adjust);
-        main_obj.resolveBounce(momentum_ang,surface_ang);
+        if(!main_obj.static_ && main_obj.solid){
+            main_obj.move(pos_adjust);
+            main_obj.resolveBounce(momentum_ang,surface_ang);
+        }
+
+
         main_obj.onCollisionEnter(second_obj);
-        System.out.println("collisione");
+
     }
 }

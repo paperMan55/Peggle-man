@@ -1,6 +1,7 @@
 package gamePrefabs;
 
 import ObjectTools.Circle2;
+import ObjectTools.ObjectList;
 import ObjectTools.Objecto2;
 
 public class Peg extends Circle2 {
@@ -25,7 +26,6 @@ public class Peg extends Circle2 {
     }
     @Override
     public void onCollisionEnter(Objecto2 o){
-        destroy();
     }
 
 }

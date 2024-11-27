@@ -28,12 +28,13 @@ public class Circle2 extends Objecto2{
     public boolean collideWithCircle(Objecto2 o) {
         if(o.size[0] == o.size[1]){
             double distance = Math.sqrt(Math.pow(getCenter()[0]-o.getCenter()[0],2)+Math.pow(getCenter()[1]-o.getCenter()[1],2));
-            if(distance<size[0]/2+o.size[0]/2){
+            if(distance<=size[0]/2+o.size[0]/2){
                 double toMove = (size[0]/2+o.size[0]/2) -distance;
                 float lineM = (getCenter()[1]-o.getCenter()[1])/(getCenter()[0]-o.getCenter()[0]);
                 double moveX = Math.abs((toMove/Math.sqrt(Math.pow(lineM,2)+1)));
                 double moveY = Math.sqrt(Math.pow(toMove,2)-Math.pow(moveX,2));
                 float[] toadjust= new float[]{(float)(momentum[0]>0?-moveX:moveX),(float)(momentum[1]>0?-moveY:moveY)};
+
                 new Collision(this,o,toadjust,momentum[1]/momentum[0],-1/lineM);
                 return true;
             }

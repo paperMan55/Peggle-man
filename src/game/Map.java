@@ -25,10 +25,7 @@ public class Map {//sta classe non serve
         this.listaPegs=arraylitPegs;
         createWindow();
         creationDefinitiveMap();
-        Objecto2 o = new Circle2(500,0,20, Color.GREEN,true, false);
-        o.bounce = 1f;
-        o.gravity = 9.81f;
-        o.drag = 0f;
+        Objecto2 o = new Ball(500,0,Color.GREEN);
         o.momentum[0]= 1;
         o.momentum[1]= 0;
 
@@ -68,8 +65,9 @@ public class Map {//sta classe non serve
         risolvo le collisioni solo dopo aver controllato tutti gli oggetti altrimenti
         solo uno dei due oggetti che collidono vede la collisione
          */
-
         for(Collision c:ObjectList.collisions.values()){
+
+
             c.resolve();
         }
         ObjectList.collisions.clear();
