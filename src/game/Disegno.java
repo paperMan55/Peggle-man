@@ -1,18 +1,28 @@
 package game;
 
+import ObjectTools.Collision;
 import ObjectTools.ObjectList;
 import ObjectTools.Objecto2;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.random.RandomGenerator;
 
 public class Disegno extends JPanel {
     public static ArrayList<float[]> pointDebuggers = new ArrayList<>();
+
+    public void startClock(){
+        Clock clock = new Clock(this);
+        clock.start();
+    }
+
     public void paint(Graphics g){
+        
+
         Toolkit.getDefaultToolkit().sync(); // altrimenti lagga in linux
         super.paint(g);
-
         for (Objecto2 o: ObjectList.objects) {
             g.setColor(o.color);
             switch (o.type){
@@ -46,4 +56,27 @@ public class Disegno extends JPanel {
         //g.drawImage(i,position[0],position[1],this);
         Clock.drawFrame(); //pk altrimenti sto metodo e asincrono e crea errori nell esecuzione
     }
+
+    public void update(){
+        for (Objecto2 o:ObjectList.objects ) {
+            if(o.position[1]>1000){
+                o.position = new float[]{500, 0};
+                o.momentum[0]= (float)(Math.random()*1000)-500;
+                o.momentum[1]= (float)(Math.random()*100)-50;
+            }
+            o.update();
+        }
+
+        /*
+        risolvo le collisioni solo dopo aver controllato tutti gli oggetti altrimenti
+        solo uno dei due oggetti che collidono vede la collisione
+         */
+        for(Collision c:ObjectList.collisions.values()){
+
+
+            c.resolve();
+        }
+        ObjectList.collisions.clear();
+    }
+
 }
