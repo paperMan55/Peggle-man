@@ -1,6 +1,6 @@
 package map_creator;
 import game.Disegno;
-import game.Map;
+
 import gamePrefabs.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,6 +10,7 @@ import java.awt.image.RGBImageFilter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import game.UIManager;
 
 
 
@@ -69,21 +70,21 @@ public Map_Tester(){
                 }
                 else if(colortoscan==Color.BLACK.getRGB()){
                     System.out.println("Rilevato pixel nero");
-                    float posX= (float) (j * Map.window_width) / imagetoscan.getWidth();
-                    float posY = (float) (i*Map.window_height) / imagetoscan.getHeight();
+                    float posX= (float) (j * UIManager.GAME_WIDTH) / imagetoscan.getWidth();
+                    float posY = (float) (i* UIManager.GAME_HEIGHT) / imagetoscan.getHeight();
                     listaPeg.add(new Peg(posX,posY, colortoscan));
                 }
                 else if (colortoscan==Color.BLUE.getRGB()){
                     System.out.println("Rilevato pixel blu");
-                    float posX= (float) (j * Map.window_width) / imagetoscan.getWidth();
-                    float posY = (float) (i*Map.window_height) / imagetoscan.getHeight();
+                    float posX= (float) (j * UIManager.GAME_WIDTH) / imagetoscan.getWidth();
+                    float posY = (float) (i*UIManager.GAME_HEIGHT) / imagetoscan.getHeight();
                     listaPeg.add(new Peg(posX,posY, colortoscan));
 
                 }
                 else if(colortoscan==Color.RED.getRGB()){
                     System.out.println("Rilevato pixel rosso");
-                    float posX= (float) (j * Map.window_width) / imagetoscan.getWidth();
-                    float posY = (float) (i*Map.window_height) / imagetoscan.getHeight();
+                    float posX= (float) (j * UIManager.GAME_WIDTH) / imagetoscan.getWidth();
+                    float posY = (float) (i*UIManager.GAME_HEIGHT) / imagetoscan.getHeight();
                     listaPeg.add(new Peg(posX,posY, colortoscan));
                 }
 
@@ -95,7 +96,7 @@ public Map_Tester(){
     }
     public static void createWindow(){
         thisframe= new JFrame("diocanvuoifunzionarediocandiocan");
-        thisframe.setSize(Map.window_width, Map.window_height);
+        thisframe.setSize(UIManager.GAME_WIDTH, UIManager.GAME_HEIGHT);
         thisdisegno = new Disegno();
         thisframe.add(thisdisegno);
 
@@ -106,9 +107,6 @@ public Map_Tester(){
         return listapeg;
     }
 
-    public static Map createdefinitiveMap(ArrayList<Peg> listaPegs){
 
-        return new Map (listaPegs);
-    }
 }
 

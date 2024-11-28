@@ -95,7 +95,7 @@ public class Rectangle2 extends Objecto2{
         float incidentX;
         float incidentY;
         if(Double.isInfinite(lineM)){
-            System.out.println("fixed");
+            
             incidentX = o.position[0];
         }else{
             incidentX = (momentumQ-lineQ)/(lineM-momentumM);

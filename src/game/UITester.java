@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.plaf.PanelUI;
 
 import ObjectTools.Image2;
+import ObjectTools.Line2;
 import ObjectTools.ObjectList;
 import ObjectTools.Objecto2;
 import gamePrefabs.Ball;
@@ -43,7 +44,10 @@ public class UITester {
         
         //Map_Tester pam_tester= new Map_Tester();
          
-             
+             /*
+             immagine di sfondo
+             new Image2(0, 0, 750, 750, ImageIO.read(new File("src/map_creator/Images/"+MapManager.imagename+"_image.jpg")))
+             */ 
         
     
         System.out.println("weeeeeee");
@@ -60,7 +64,7 @@ public class UITester {
         
         m.addingComponent(panelBottom);
 
-
+        
         MapManager.setMapFromPNG(MapManager.imagename); 
         //conterrà la mappa del gioco e il gioco in  sè
         //panelCenterGame.setBackground();
@@ -74,18 +78,19 @@ public class UITester {
         pallina.momentum[0]=1;
         
         ObjectList.objects.add(pallina);
-        try{
-
-            ObjectList.objects.add(new Image2(0, 0, 750, 750, ImageIO.read(new File("src/map_creator/Images/"+MapManager.imagename+"_image.jpg"))));
-
-        }catch(Exception e){
-            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        }
+        
 
         
         System.out.println(ObjectList.objects.size());
-        disegno.startClock();
+        
 
         disegno.setBounds(0, 0, 750, 750);
+        
+
+        Objecto2 lineasinistra= new Line2(50, 750, 50, 0);
+        Objecto2 lineadestra= new Line2(730, 0, 731, 750,Color.RED);
+        ObjectList.objects.add(lineadestra);
+        ObjectList.objects.add(lineasinistra);
+        disegno.startClock();
     }
 }

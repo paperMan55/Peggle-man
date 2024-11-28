@@ -24,9 +24,8 @@ public abstract class Objecto2 {
     public float drag;
     public float gravity;
     public float bounce;
-    public Color color;
-    public boolean solid;
-    private ArrayList<Objecto2> objs;
+    public Color color = Color.black;
+    public boolean solid = true;
 
 
     //questa classe permetterà una gestione facilitata degli oggetti con attributi tipo posizione e grandezza
@@ -48,7 +47,6 @@ public abstract class Objecto2 {
         momentum = new float[]{0,0};
         drag = 1;
         gravity = 0f;
-        objs = ObjectList.objects;
         
         bounce = 0f;
         this.static_ = static_;
@@ -60,6 +58,7 @@ public abstract class Objecto2 {
         this.image = image;
         position = new float[]{posX, posY};
         size = new float[]{width,height};
+        momentum = new float[]{0,0};
     }
 
     public void addForce(int xForce, int yForce){
@@ -82,7 +81,7 @@ public abstract class Objecto2 {
 
     }
     public void checkCollision(){
-        for (Objecto2 o:objs) {
+        for (Objecto2 o:ObjectList.objects) {
             if(!o.equals(this)){
                 switch (o.type){
                     case Objecto2.LINE:

@@ -95,15 +95,12 @@ public class Image2 extends Objecto2{
         float incidentX;
         float incidentY;
         if(Double.isInfinite(lineM)){
-            System.out.println("fixed");
             incidentX = o.position[0];
         }else{
             incidentX = (momentumQ-lineQ)/(lineM-momentumM);
         }
         incidentY = momentumM*incidentX + momentumQ;
-        System.out.println(lineM+"----->"+(incidentX)+";"+incidentY);
-
-        System.out.println("\t "+getPosition());
+    
 
         return new float[]{-(angPos[0]-incidentX),-(angPos[1]-incidentY)};
     }
