@@ -87,10 +87,12 @@ public class UITester {
         disegno.setBounds(0, 0, 750, 750);
         
 
-        Objecto2 lineasinistra= new Line2(50, 750, 50, 0);
-        Objecto2 lineadestra= new Line2(730, 0, 731, 750,Color.RED);
+        Objecto2 lineasinistra= new Line2(-1, 750, -1, 0);
+        Objecto2 lineadestra= new Line2(750, 0, 750, 750);
+        Objecto2 lineasu= new Line2(0, -1, 750, -1);
         ObjectList.objects.add(lineadestra);
         ObjectList.objects.add(lineasinistra);
+        ObjectList.objects.add(lineasu);
         disegno.startClock();
     }
 }

@@ -10,8 +10,8 @@ public class Ball extends Circle2 {
     public Ball(float posX, float posY) {
         super(posX, posY, BALL_SIZE);
         static_ = false;
-        bounce = 1f;
-        gravity = 9.81f;
+        bounce = 0.8f;
+        gravity = 5.81f;
         drag = 0f;
 
     }
@@ -19,8 +19,8 @@ public class Ball extends Circle2 {
     public Ball(float posX, float posY, Color color) {
         super(posX, posY, BALL_SIZE, color);
         static_ = false;
-        bounce = 1f;
-        gravity = 9.81f;
+        bounce = 0.8f;
+        gravity = 5.81f;
         drag = 0f;
     }
 

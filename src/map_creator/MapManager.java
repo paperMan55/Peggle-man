@@ -69,20 +69,20 @@ public MapManager(){
 
                 }
                 else if(colortoscan==Color.BLACK.getRGB()){
-                    System.out.println("Rilevato pixel nero");
+                    //System.out.println("Rilevato pixel nero");
                     float posX= (float) (j * UIManager.GAME_WIDTH) / imagetoscan.getWidth();
                     float posY = (float) (i * UIManager.GAME_HEIGHT) / imagetoscan.getHeight();
                     listaPeg.add(new Peg(posX,posY, colortoscan));
                 }
                 else if (colortoscan==Color.BLUE.getRGB()){
-                    System.out.println("Rilevato pixel blu");
+                    //System.out.println("Rilevato pixel blu");
                     float posX= (float) (j * UIManager.GAME_WIDTH) / imagetoscan.getWidth();
                     float posY = (float) (i*UIManager.GAME_HEIGHT) / imagetoscan.getHeight();
                     listaPeg.add(new Peg(posX,posY, colortoscan));
 
                 }
                 else if(colortoscan==Color.RED.getRGB()){
-                    System.out.println("Rilevato pixel rosso");
+                   // System.out.println("Rilevato pixel rosso");
                     float posX= (float) (j * UIManager.GAME_WIDTH) / imagetoscan.getWidth();
                     float posY = (float) (i*UIManager.GAME_HEIGHT) / imagetoscan.getHeight();
                     listaPeg.add(new Peg(posX,posY, colortoscan));

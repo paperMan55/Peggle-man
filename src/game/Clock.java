@@ -7,7 +7,7 @@ public class Clock extends Thread {
     public static double deltaTime = 0;
     public static int fpsLimit = 10000;
     private static long exTime = 0;
-    public static float timeScale = 0.5f;
+    public static float timeScale = 1f;
 
     public Clock(Disegno graphic) {
 

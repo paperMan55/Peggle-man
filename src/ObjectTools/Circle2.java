@@ -133,8 +133,10 @@ public class Circle2 extends Objecto2{
             incidentX = (momentumQ-lineQ)/(lineM-momentumM);
         }
         incidentY = momentumM*incidentX + momentumQ;
-
-        return new float[]{-(angPos[0]-incidentX),-(angPos[1]-incidentY)};
+        float moveX = Math.abs(angPos[0]-incidentX);
+        float moveY = Math.abs(angPos[1]-incidentY);
+        float[] toadjust= new float[]{(float)(momentum[0]>0?-moveX:moveX),(float)(momentum[1]>0?-moveY:moveY)};
+        return toadjust;
     }
 
 	@Override

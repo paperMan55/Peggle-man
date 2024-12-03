@@ -94,15 +94,19 @@ public class Rectangle2 extends Objecto2{
         }
         float incidentX;
         float incidentY;
+
         if(Double.isInfinite(lineM)){
             
             incidentX = o.position[0];
         }else{
             incidentX = (momentumQ-lineQ)/(lineM-momentumM);
         }
-        incidentY = momentumM*incidentX + momentumQ;
 
-        return new float[]{-(angPos[0]-incidentX),-(angPos[1]-incidentY)};
+        incidentY = momentumM * incidentX + momentumQ;
+        float moveX = Math.abs(angPos[0]-incidentX);
+        float moveY = Math.abs(angPos[1]-incidentY);
+        float[] toadjust= new float[]{(float)(momentum[0]>0?-moveX:moveX),(float)(momentum[1]>0?-moveY:moveY)};
+        return toadjust;
     }
 
 	@Override
