@@ -1,4 +1,4 @@
-package game;
+package UI;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -13,19 +13,20 @@ import ObjectTools.Image2;
 import ObjectTools.Line2;
 import ObjectTools.ObjectList;
 import ObjectTools.Objecto2;
+import game.Disegno;
 import gamePrefabs.Ball;
 import map_creator.MapManager;
 
 public class UITester {
     public static void main(String[] args) {
-        UIManager m= new UIManager("Prova_Man");
+        /*
 
 
 
         //DICHIARAZIONE OGGETTI SCENA
-        JPanel panelOnTheLeft = new JPanel();
+        PanelOnTheLeft panelOnTheLeft = new PanelOnTheLeft(0,0,215,0);
         JPanel panelCenterGame= new JPanel();
-        JPanel panelOnTheRight= new JPanel();
+        PanelOnTheRight panelOnTheRight= new PanelOnTheRight();
         JPanel panelBottom= new JPanel();
 
 
@@ -34,9 +35,7 @@ public class UITester {
         //MANIPOLAZIONE DEI PANEL
 
         //Conterrà le palline come un flipper e il menu di gioco
-        panelOnTheLeft.setBackground(Color.MAGENTA);
-        panelOnTheLeft.setBounds(0,0,215,m.getWINDOWS_HEIGHT());
-        m.addingComponent(panelOnTheLeft);
+        
 
         panelCenterGame.setBounds(m.getWINDOWS_width()/2-385, 0, 750, 725);
         m.addingComponent(panelCenterGame);
@@ -44,10 +43,10 @@ public class UITester {
         
         //Map_Tester pam_tester= new Map_Tester();
          
-             /*
+             
              immagine di sfondo
              new Image2(0, 0, 750, 750, ImageIO.read(new File("src/map_creator/Images/"+MapManager.imagename+"_image.jpg")))
-             */ 
+              
         
     
         System.out.println("weeeeeee");
@@ -57,7 +56,7 @@ public class UITester {
         m.addingComponent(panelOnTheRight);
 
 
-
+\
         panelBottom.setBackground(Color.lightGray);
         panelBottom.setBounds(panelOnTheLeft.getWidth(), panelCenterGame.getHeight(),m.getWINDOWS_width()-panelOnTheLeft.getWidth()-panelOnTheRight.getWidth(),m.getWINDOWS_HEIGHT()-panelCenterGame.getHeight());
         //panelBottom.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5, false));
@@ -94,5 +93,9 @@ public class UITester {
         ObjectList.objects.add(lineasinistra);
         ObjectList.objects.add(lineasu);
         disegno.startClock();
+        */
+
+        UIManager m= new UIManager("Prova_Man");
+
     }
 }

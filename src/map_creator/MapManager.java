@@ -1,6 +1,6 @@
 package map_creator;
 import game.Disegno;
-import game.UIManager;
+import UI.UIManager;
 import gamePrefabs.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;

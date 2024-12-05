@@ -1,10 +1,15 @@
 package game;
 
+import java.util.ArrayList;
 
 public class GameManager {
-    public static long points;
-    public static int balls;
+    public static ArrayList<Player> players = new ArrayList<>();
 
-    public static void addPoint(int points){
-        GameManager.points += points;
-    }}
+    public static Player currentPlayer;
+    public static int turnPoints = 0;
+
+    public static void addPoints(){
+        
+    }
+    
+}
