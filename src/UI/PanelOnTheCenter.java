@@ -22,7 +22,7 @@ public class PanelOnTheCenter extends JPanel {
         this.setBounds(0,0,215,0);
         //non ancora aggiunto al frame
     }
-    public PanelOnTheCenter(int x, int y, int height, int width){
+    public PanelOnTheCenter(int x, int y, int width, int height){
         this.height=height;
         this.width=width;
         this.position[0]=x;
@@ -44,7 +44,6 @@ public class PanelOnTheCenter extends JPanel {
     @Override
     public int getHeight() {
         // TODO Auto-generated method stub
-        return this.height;
-    }
+        return this.height;    }
     
 }

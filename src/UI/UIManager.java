@@ -5,6 +5,7 @@ import javax.swing.*;
 import ObjectTools.Line2;
 import ObjectTools.ObjectList;
 import ObjectTools.Objecto2;
+import game.Disegno;
 import gamePrefabs.Ball;
 import map_creator.MapManager;
 
@@ -19,13 +20,13 @@ public class UIManager{
     public PanelOnTheLeft panelontheleft;
     public PanelOnTheRight panelOnTheRight;
     public PanelBottom panelbottom;
-    public PanelOnTheCenter panelOnTheCenter;
+    public Disegno panelOnTheCenter;
 
     
     public UIManager(String nameofFrame){
         settingFrame(nameofFrame);
         setLayoutUp();
-        //creazioneCampoDiGioco();
+        creazioneCampoDiGioco();
     }
     public void settingFrame(String nameofFrame){
         finestraGioco= new JFrame(nameofFrame);
@@ -37,34 +38,26 @@ public class UIManager{
         this.finestraGioco.add(componenToAdd);
         
     }
-    public int getWINDOWS_HEIGHT() {
-        return WINDOWS_HEIGHT;
-    }
-    public int getWINDOWS_width() {
-        return WINDOWS_WIDTH;
-    }
 
     public void setLayoutUp(){
 
-        //dichiarazione del pannello nella parte a sinistra dello schermo
-        panelontheleft= new PanelOnTheLeft(0,0,215,300);
 
+        panelontheleft= new PanelOnTheLeft(0,0,(WINDOWS_WIDTH-GAME_WIDTH)/2,WINDOWS_HEIGHT);
 
-        //dischiarazione del pannello a destra
-        //panelOnTheRight= new PanelOnTheRight(UIManager.WINDOWS_WIDTH-235, 0, 222, this.WINDOWS_HEIGHT);
-
-
-        //panelOnTheCenter= new PanelOnTheCenter((UIManager.WINDOWS_WIDTH)/2-385, 0,750,725);
+        panelOnTheRight= new PanelOnTheRight((WINDOWS_WIDTH-GAME_WIDTH)/2+GAME_WIDTH, 0, (WINDOWS_WIDTH-GAME_WIDTH)/2, WINDOWS_HEIGHT);
+        panelOnTheCenter = new Disegno();
+        panelOnTheCenter.setBounds((WINDOWS_WIDTH-GAME_WIDTH)/2, 0,GAME_WIDTH,GAME_HEIGHT);
+        //panelOnTheCenter= new PanelOnTheCenter((WINDOWS_WIDTH-GAME_WIDTH)/2, 0,GAME_WIDTH,GAME_HEIGHT);
 
 
         //dichiarazione del pannello in basso
-        //panelbottom= new PanelBottom(panelontheleft.getWidth(), panelOnTheCenter.getHeight(), UIManager.WINDOWS_WIDTH-panelOnTheRight.getWidth()-panelOnTheRight.getWidth(), UIManager.WINDOWS_HEIGHT-panelOnTheCenter.getHeight());
+        panelbottom= new PanelBottom(panelontheleft.getWidth(), panelOnTheCenter.getHeight(), UIManager.WINDOWS_WIDTH-panelOnTheRight.getWidth()-panelOnTheRight.getWidth(), UIManager.WINDOWS_HEIGHT-panelOnTheCenter.getHeight());
         
         this.addComponent(panelontheleft);
-        //this.addComponent(panelOnTheCenter);
+        this.addComponent(panelOnTheCenter);
 
-        //this.addComponent(panelOnTheRight);
-        //this.addComponent(panelbottom);
+        this.addComponent(panelOnTheRight);
+        this.addComponent(panelbottom);
     }
 
     public void creazioneCampoDiGioco(){
@@ -80,6 +73,5 @@ public class UIManager{
         ObjectList.objects.add(lineadestra);
         ObjectList.objects.add(lineasinistra);
         ObjectList.objects.add(lineasu);
-        this.panelOnTheCenter.disegno.startClock();
     }
 }

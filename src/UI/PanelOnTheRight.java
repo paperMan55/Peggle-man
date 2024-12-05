@@ -19,7 +19,7 @@ public class PanelOnTheRight extends JPanel{
         this.setBounds(0,0,215,0);
         //non ancora aggiunto al frame
     }
-    public PanelOnTheRight(int x, int y, int height, int width){
+    public PanelOnTheRight(int x, int y, int width, int height){
         this.height=height;
         this.width=width;
         this.position[0]=x;

@@ -13,10 +13,8 @@ import java.util.random.RandomGenerator;
 public class Disegno extends JPanel {
     public static ArrayList<float[]> pointDebuggers = new ArrayList<>();
 
-    public void startClock(){
-        Clock clock = new Clock(this);
-        clock.start();
-    }
+
+
 
     public void paint(Graphics g){
         
@@ -54,7 +52,7 @@ public class Disegno extends JPanel {
         //Image i = Toolkit.getDefaultToolkit().getImage("src/papera1.png");
         //i = i.getScaledInstance(50,50,Image.SCALE_SMOOTH);
         //g.drawImage(i,position[0],position[1],this);
-        Clock.drawFrame(); //pk altrimenti sto metodo e asincrono e crea errori nell esecuzione
+        //Clock.drawFrame(); //pk altrimenti sto metodo e asincrono e crea errori nell esecuzione
     }
 
     public void update(){

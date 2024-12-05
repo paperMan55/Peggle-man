@@ -18,17 +18,9 @@ public class Clock extends Thread {
 
     @Override
     public void run() {
-/*
+
         while (true) {
-
-            long tmp = System.nanoTime();
-            deltaTime =  (double)(Math.abs(tmp) - Math.abs(exTime)) / 1000000000;
-            deltaTime *= timeScale;
-            m.update();
-
-            d.repaint();
-            ObjectList.objects.removeAll(ObjectList.deletionQueue); //elimina gli oggetti che vanno eliminati
-            ObjectList.deletionQueue.clear(); //svuota la lista degli oggetti da eliminare
+            drawFrame();
             try {
                 if (fpsLimit > 0) {
                     Thread.sleep(1000 / fpsLimit);
@@ -36,12 +28,11 @@ public class Clock extends Thread {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            exTime = tmp;
         }
 
- */
-        
-        drawFrame();
+
+
+
 
     }
 
@@ -52,8 +43,14 @@ public class Clock extends Thread {
             d.update();
 
             d.repaint();
-            ObjectList.objects.removeAll(ObjectList.deletionQueue); //elimina gli oggetti che vanno eliminati
-            ObjectList.deletionQueue.clear(); //svuota la lista degli oggetti da eliminare
+            try{
+                ObjectList.objects.removeAll(ObjectList.deletionQueue); //elimina gli oggetti che vanno eliminati
+                ObjectList.deletionQueue.clear(); //svuota la lista degli oggetti da eliminare
+            }catch (Exception e){
+                System.out.println(e.getStackTrace());
+                System.out.println("--*****! errore !*****--");
+            }
+
             try {
                 if (fpsLimit > 0) {
                     Thread.sleep(1000 / fpsLimit);
