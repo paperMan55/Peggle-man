@@ -1,6 +1,7 @@
 package game;
 
 import ObjectTools.ObjectList;
+import UI.Disegno;
 
 public class Clock extends Thread {
     private static Disegno d;

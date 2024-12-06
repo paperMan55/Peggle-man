@@ -1,5 +1,5 @@
 package map_creator;
-import game.Disegno;
+import UI.Disegno;
 import UI.UIManager;
 import gamePrefabs.*;
 import javax.imageio.ImageIO;
@@ -9,7 +9,6 @@ import ObjectTools.ObjectList;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.RGBImageFilter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -111,7 +110,7 @@ public MapManager(){
 
     public static BufferedImage getImage(String nameofImage){
         try {
-            backgroundImage= ImageIO.read(new File("src/map_creator/Images/"+nameofImage+".png"));
+            backgroundImage= ImageIO.read(new File("src/Images/"+nameofImage+".png"));
             //g.drawImage(backgroundImage, 0, 0, null);
     
             //System.out.println(backgroundImage.getType());

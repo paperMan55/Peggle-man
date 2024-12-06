@@ -1,10 +1,6 @@
 package UI;
 
-import java.awt.Color;
-
 import javax.swing.JPanel;
-
-import game.Disegno;
 
 public class PanelOnTheCenter extends JPanel {
     private int height=0;

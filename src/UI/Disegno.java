@@ -1,4 +1,4 @@
-package game;
+package UI;
 
 import ObjectTools.Collision;
 import ObjectTools.ObjectList;
@@ -7,8 +7,6 @@ import ObjectTools.Objecto2;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.random.RandomGenerator;
 
 public class Disegno extends JPanel {
     public static ArrayList<float[]> pointDebuggers = new ArrayList<>();
