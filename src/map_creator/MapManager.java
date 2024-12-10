@@ -26,8 +26,6 @@ static BufferedImage backgroundImage;
 public static ArrayList<Peg> listapegstatica;
 public MapManager(){
     //createWindow();
-
-
 /*
     thisframe.setContentPane(new JPanel(){
         @Override
@@ -42,13 +40,9 @@ public MapManager(){
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
-
         }
     });
-
  */
-
 }
     public static void setMapFromPNG(String src){
         BufferedImage image = getImage(src);
@@ -78,14 +72,13 @@ public MapManager(){
                     float posX= (float) (j * UIManager.GAME_WIDTH) / imagetoscan.getWidth();
                     float posY = (float) (i*UIManager.GAME_HEIGHT) / imagetoscan.getHeight();
                     listaPeg.add(new Peg(posX,posY, colortoscan));
-
                 }
-                else if(colortoscan==Color.RED.getRGB()){
-                   // System.out.println("Rilevato pixel rosso");
-                    float posX= (float) (j * UIManager.GAME_WIDTH) / imagetoscan.getWidth();
-                    float posY = (float) (i*UIManager.GAME_HEIGHT) / imagetoscan.getHeight();
-                    listaPeg.add(new Peg(posX,posY, colortoscan));
-                }
+                    else if(colortoscan==Color.RED.getRGB()){
+                       // System.out.println("Rilevato pixel rosso");
+                        float posX= (float) (j * UIManager.GAME_WIDTH) / imagetoscan.getWidth();
+                        float posY = (float) (i*UIManager.GAME_HEIGHT) / imagetoscan.getHeight();
+                        listaPeg.add(new Peg(posX,posY, colortoscan));
+                    }
 
             }
 
