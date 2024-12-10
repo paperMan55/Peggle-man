@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static game.Clock.removeObjects;
+
 public class Disegno extends JPanel {
     public static ArrayList<float[]> pointDebuggers = new ArrayList<>();
 
@@ -19,6 +21,7 @@ public class Disegno extends JPanel {
 
         Toolkit.getDefaultToolkit().sync(); // altrimenti lagga in linux
         super.paint(g);
+
         for (Objecto2 o: ObjectList.objects) {
             g.setColor(o.color);
             switch (o.type){
@@ -51,6 +54,7 @@ public class Disegno extends JPanel {
         //i = i.getScaledInstance(50,50,Image.SCALE_SMOOTH);
         //g.drawImage(i,position[0],position[1],this);
         //Clock.drawFrame(); //pk altrimenti sto metodo e asincrono e crea errori nell esecuzione
+
     }
 
     public void update(){
@@ -74,5 +78,4 @@ public class Disegno extends JPanel {
         }
         ObjectList.collisions.clear();
     }
-
 }

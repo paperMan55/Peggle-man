@@ -78,7 +78,7 @@ public abstract class Objecto2 {
         }
 
         checkCollision();
-
+        onUpdate();
     }
     public void checkCollision(){
         for (Objecto2 o:ObjectList.objects) {
@@ -121,7 +121,6 @@ public abstract class Objecto2 {
             outputX = 0;
             outputY = momentum[1];
         }else if(Double.isInfinite(angObj)){
-            System.out.println("fatto qualcosa");
             outputX = momentum[0];
             outputY = 0;
         } else{
@@ -187,6 +186,7 @@ public abstract class Objecto2 {
         this.position[0] += toMove[0];
         this.position[1] += toMove[1];
     }
+    public abstract void onUpdate();
     public void move(float x, float y){
         this.position[0] += x;
         this.position[1] += y;

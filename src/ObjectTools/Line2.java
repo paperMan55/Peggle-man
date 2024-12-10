@@ -41,6 +41,9 @@ public class Line2 extends Objecto2{
         //I decided that lines cant move so... non need of this
         return null;
     }
+    @Override
+    public void onUpdate() {
+    }
 
 	@Override
 	public void onCollisionEnter(Objecto2 o) {}

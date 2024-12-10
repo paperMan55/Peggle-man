@@ -41,16 +41,12 @@ public class Clock extends Thread {
             long tmp = System.nanoTime();
             deltaTime =  (double)(Math.abs(tmp) - Math.abs(exTime)) / 1000000000;
             deltaTime *= timeScale;
+
             d.update();
 
             d.repaint();
-            try{
-                ObjectList.objects.removeAll(ObjectList.deletionQueue); //elimina gli oggetti che vanno eliminati
-                ObjectList.deletionQueue.clear(); //svuota la lista degli oggetti da eliminare
-            }catch (Exception e){
-                System.out.println(e.getStackTrace());
-                System.out.println("--*****! errore !*****--");
-            }
+            removeObjects();
+
 
             try {
                 if (fpsLimit > 0) {
@@ -60,7 +56,11 @@ public class Clock extends Thread {
                 throw new RuntimeException(e);
             }
             exTime = tmp;
+
         }
         
-    
+    public static void removeObjects(){
+        ObjectList.objects.removeAll(ObjectList.deletionQueue); //elimina gli oggetti che vanno eliminati
+        ObjectList.deletionQueue.clear(); //svuota la lista degli oggetti da eliminare
+    }
 }

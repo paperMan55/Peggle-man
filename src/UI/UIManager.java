@@ -5,10 +5,13 @@ import javax.swing.*;
 import ObjectTools.Line2;
 import ObjectTools.ObjectList;
 import ObjectTools.Objecto2;
+import gamePrefabs.Aimer;
 import gamePrefabs.Ball;
 import map_creator.MapManager;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class UIManager{
     private JFrame finestraGioco;
@@ -29,6 +32,7 @@ public class UIManager{
     }
     public void settingFrame(String nameofFrame){
         finestraGioco= new JFrame(nameofFrame);
+
         finestraGioco.setSize(WINDOWS_WIDTH, WINDOWS_HEIGHT);
         finestraGioco.setVisible(true);
         finestraGioco.setLayout(null);
@@ -42,7 +46,6 @@ public class UIManager{
 
 
         panelontheleft= new PanelOnTheLeft(0,0,(WINDOWS_WIDTH-GAME_WIDTH)/2,WINDOWS_HEIGHT);
-
         panelOnTheRight= new PanelOnTheRight((WINDOWS_WIDTH-GAME_WIDTH)/2+GAME_WIDTH, 0, (WINDOWS_WIDTH-GAME_WIDTH)/2, WINDOWS_HEIGHT);
         panelOnTheCenter = new Disegno();
         panelOnTheCenter.setBounds((WINDOWS_WIDTH-GAME_WIDTH)/2, 0,GAME_WIDTH,GAME_HEIGHT);
@@ -63,7 +66,7 @@ public class UIManager{
         MapManager.setMapFromPNG(MapManager.imagename);
         Objecto2 pallina= new Ball(300, 300, Color.CYAN);
         pallina.momentum[0]=1;
-        
+        ObjectList.objects.add(new Aimer(0,0));
         ObjectList.objects.add(pallina);
         
         Objecto2 lineasinistra= new Line2(-1, 750, -1, 0);
@@ -73,4 +76,5 @@ public class UIManager{
         ObjectList.objects.add(lineasinistra);
         ObjectList.objects.add(lineasu);
     }
+
 }
