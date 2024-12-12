@@ -61,7 +61,7 @@ public abstract class Objecto2 {
         momentum = new float[]{0,0};
     }
 
-    public void addForce(int xForce, int yForce){
+    public void addForce(double xForce, double yForce){
         this.position[0] += xForce;
         this.position[1] += yForce;
         momentum[0] += xForce;
@@ -179,8 +179,8 @@ public abstract class Objecto2 {
         return Math.sqrt(Math.pow(momentum[0],2)+Math.pow(momentum[1],2));
     }
 
-    public boolean destroy(){
-        return ObjectList.deletionQueue.add(this);
+    public void destroy(){
+        ObjectList.removeObject(this);
     }
     public void move(float[] toMove){
         this.position[0] += toMove[0];
@@ -191,5 +191,6 @@ public abstract class Objecto2 {
         this.position[0] += x;
         this.position[1] += y;
     }
+    public abstract Objecto2 getCopy();
 }
 

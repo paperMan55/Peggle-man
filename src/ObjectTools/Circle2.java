@@ -143,4 +143,21 @@ public class Circle2 extends Objecto2{
 	public void onCollisionEnter(Objecto2 o) {}
     @Override
     public void onUpdate() {}
+    @Override
+    public Objecto2 getCopy() {
+        Objecto2 copy = new Image2(position[0],position[1],size[0],size[1],Color.GREEN);
+        copy.type = this.type;
+        copy.static_ = this.static_;
+        copy.debug = this.debug;
+        copy.position = this.position;
+        copy.momentum = this.momentum;
+        copy.size = this.size;
+        copy.image = this.image;
+        copy.drag = this.drag;
+        copy.gravity = this.gravity;
+        copy.bounce = this.bounce;
+        copy.color = this.color;
+        copy.solid = this.solid;
+        return copy;
+    }
 }

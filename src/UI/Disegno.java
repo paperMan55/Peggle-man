@@ -3,12 +3,12 @@ package UI;
 import ObjectTools.Collision;
 import ObjectTools.ObjectList;
 import ObjectTools.Objecto2;
+import game.Clock;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static game.Clock.removeObjects;
 
 public class Disegno extends JPanel {
     public static ArrayList<float[]> pointDebuggers = new ArrayList<>();
@@ -54,7 +54,7 @@ public class Disegno extends JPanel {
         //i = i.getScaledInstance(50,50,Image.SCALE_SMOOTH);
         //g.drawImage(i,position[0],position[1],this);
         //Clock.drawFrame(); //pk altrimenti sto metodo e asincrono e crea errori nell esecuzione
-
+        Clock.flag = true;
     }
 
     public void update(){

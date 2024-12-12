@@ -5,6 +5,7 @@ import UI.Disegno;
 
 public class Clock extends Thread {
     private static Disegno d;
+    public static boolean flag = true;
     public static double deltaTime = 0;
     public static int fpsLimit = 10000;
     private static long exTime = 0;
@@ -19,9 +20,11 @@ public class Clock extends Thread {
 
     @Override
     public void run() {
-
         while (true) {
-            drawFrame();
+            if(flag) {
+                flag = false;
+                drawFrame();
+            }
             try {
                 if (fpsLimit > 0) {
                     Thread.sleep(1000 / fpsLimit);
@@ -29,38 +32,26 @@ public class Clock extends Thread {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+
         }
-
-
-
-
-
     }
-
     public static void drawFrame(){
-            long tmp = System.nanoTime();
-            deltaTime =  (double)(Math.abs(tmp) - Math.abs(exTime)) / 1000000000;
-            deltaTime *= timeScale;
+        long tmp = System.nanoTime();
+        deltaTime =  (double)(Math.abs(tmp) - Math.abs(exTime)) / 1000000000;
+        deltaTime *= timeScale;
 
-            d.update();
+        d.update();
+        ObjectList.updateList();
+        d.repaint();
 
-            d.repaint();
-            removeObjects();
-
-
-            try {
-                if (fpsLimit > 0) {
-                    Thread.sleep(1000 / fpsLimit);
-                }
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+        try {
+            if (fpsLimit > 0) {
+                Thread.sleep(1000 / fpsLimit);
             }
-            exTime = tmp;
-
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
-        
-    public static void removeObjects(){
-        ObjectList.objects.removeAll(ObjectList.deletionQueue); //elimina gli oggetti che vanno eliminati
-        ObjectList.deletionQueue.clear(); //svuota la lista degli oggetti da eliminare
+
+        exTime = tmp;
     }
 }
