@@ -19,10 +19,10 @@ public class UIManager{
     public static final int WINDOWS_WIDTH=1200;
     public static final int GAME_HEIGHT=750;
     public static final int GAME_WIDTH=750;
-    public PanelOnTheLeft panelontheleft;
-    public PanelOnTheRight panelOnTheRight;
-    public PanelBottom panelbottom;
-    public Disegno panelOnTheCenter;
+    public static PanelOnTheLeft panelontheleft;
+    public static PanelOnTheRight panelOnTheRight;
+    public static PanelBottom panelbottom;
+    public static Disegno panelOnTheCenter;
 
     
     public UIManager(String nameofFrame){
@@ -67,7 +67,7 @@ public class UIManager{
         Objecto2 pallina= new Ball(300, 300, Color.CYAN);
         pallina.momentum[0]=1;
         ObjectList.objects.add(pallina);
-        ObjectList.objects.add(new Aimer(200,0, new Ball(0,0,Color.RED)));
+        ObjectList.objects.add(new Aimer(200,200, new Ball(0,0,Color.RED)));
         Objecto2 lineasinistra= new Line2(-1, 750, -1, 0);
         Objecto2 lineadestra= new Line2(750, 0, 750, 750);
         Objecto2 lineasu= new Line2(0, -1, 750, -1);

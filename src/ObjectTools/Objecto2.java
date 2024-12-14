@@ -62,8 +62,6 @@ public abstract class Objecto2 {
     }
 
     public void addForce(double xForce, double yForce){
-        this.position[0] += xForce;
-        this.position[1] += yForce;
         momentum[0] += xForce;
         momentum[1] += yForce;
     }

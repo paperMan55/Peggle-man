@@ -24,6 +24,7 @@ public class ObjectList { //questa classe non fa altro che tenere tutti gli ogge
                 objects.remove(obj.getKey());
             }
         }
+        modificationQueue.clear();
     }
 }
 //oggetto che contiene tutti gli oggetti della mappa

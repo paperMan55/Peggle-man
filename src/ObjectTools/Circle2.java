@@ -145,12 +145,14 @@ public class Circle2 extends Objecto2{
     public void onUpdate() {}
     @Override
     public Objecto2 getCopy() {
-        Objecto2 copy = new Image2(position[0],position[1],size[0],size[1],Color.GREEN);
+        Objecto2 copy = new Circle2(position[0],position[1],size[0]);
         copy.type = this.type;
         copy.static_ = this.static_;
         copy.debug = this.debug;
-        copy.position = this.position;
-        copy.momentum = this.momentum;
+        copy.position[0] = this.position[0];
+        copy.position[1] = this.position[1];
+        copy.momentum[0] = this.momentum[0];
+        copy.momentum[1] = this.momentum[1];
         copy.size = this.size;
         copy.image = this.image;
         copy.drag = this.drag;

@@ -59,11 +59,7 @@ public class Disegno extends JPanel {
 
     public void update(){
         for (Objecto2 o:ObjectList.objects ) {
-            if(o.position[1]>1000){
-                o.position = new float[]{500, 0};
-                o.momentum[0]= -500;
-                o.momentum[1]= 10;
-            }
+
             o.update();
         }
 
