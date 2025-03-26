@@ -4,6 +4,7 @@ import game.Clock;
 
 import java.awt.*;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.lang.*;
 
@@ -102,7 +103,8 @@ public abstract class Objecto2 {
     public abstract boolean collideWithSquare(Objecto2 o);
     public abstract boolean collideWithLine(Objecto2 o);
     //ang è il coefficiente angolare tra y/x
-    public void resolveBounce(float angObj2move,float angObj){
+    public void resolveBounce(float angObj){
+        float angObj2move = momentum[1]/momentum[0];
 
         if(angObj-angObj2move == 0){
             return;
@@ -110,7 +112,9 @@ public abstract class Objecto2 {
 
         double momentumForce = getVelocity();
         double angBetween = Math.atan(Math.abs((angObj-angObj2move)/(angObj*angObj2move+1))); //in radiant
-
+        if(Double.isInfinite(angObj2move)){
+            angBetween = Math.PI/2 - Math.atan(angObj);
+        }
         double repelF = Math.sin(angBetween)* momentumForce;
 
         double outputX;
@@ -123,20 +127,22 @@ public abstract class Objecto2 {
             outputY = 0;
         } else{
             double perpendicularM = -1/angObj;
-            outputX = Math.sqrt(Math.pow(repelF,2)/(Math.pow(perpendicularM,2)+1));
+            outputX = repelF / Math.sqrt(1+perpendicularM*perpendicularM);
             outputY = outputX * perpendicularM;
         }
 
         double tmpX = momentum[0] + outputX+outputX*bounce;
         double tmpY = momentum[1] + outputY+outputY*bounce;
 
-        if(Math.sqrt(Math.pow(tmpX,2)+Math.pow(tmpY,2)) - momentumForce > 1){
-            momentum[0] -= (float) (outputX+outputX*bounce);
-            momentum[1] -= (float) (outputY+outputY*bounce);
+        //momentum[0] += (float) (momentum[0]>0? -tmpX:tmpX); // sbagliato
+        //momentum[1] += (float) (momentum[1]>0? -tmpY:tmpY);
+
+        if(angObj>=0){  //e complicato
+            momentum[0] += (float) (momentum[1]>=0? tmpX:-tmpX);
         }else {
-            momentum[0] += (float) (outputX+outputX*bounce);
-            momentum[1] += (float) (outputY+outputY*bounce);
+            momentum[0] += (float) (momentum[1]>=0? -tmpX:tmpX);
         }
+        momentum[1] += (float) (momentum[1]>=0? -tmpY:tmpY);
     }
 
 
@@ -165,7 +171,9 @@ public abstract class Objecto2 {
 
     public abstract float[] adjustPosition(Objecto2 o);
 
-    public abstract void onCollisionEnter(Objecto2 o);
+    public  void onCollisionEnter(Objecto2 o){};
+    public  void onCollisionExit(Objecto2 o){};
+    public  void onCollisionStay(Objecto2 o){};
 
     public String getMomentum(){
         return "["+momentum[0]+";"+momentum[1]+"]";
@@ -180,11 +188,23 @@ public abstract class Objecto2 {
     public void destroy(){
         ObjectList.removeObject(this);
     }
+    public void destroy(int millis) {
+        Objecto2 o = this;
+        new Thread(() -> {
+            try {
+                Thread.sleep(millis);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            ObjectList.removeObject(o);
+            System.out.println("destroyed");
+        }).start();
+    }
     public void move(float[] toMove){
         this.position[0] += toMove[0];
         this.position[1] += toMove[1];
     }
-    public abstract void onUpdate();
+    public void onUpdate(){};
     public void move(float x, float y){
         this.position[0] += x;
         this.position[1] += y;

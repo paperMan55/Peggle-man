@@ -13,6 +13,7 @@ public class Peg extends Circle2 {
     //private int[] position;
     private int  colorcod;
     final static float SIZE=20;
+    public int value = 1;
 
 
     public Peg(float x, float y, int colorcod){

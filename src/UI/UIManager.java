@@ -2,77 +2,46 @@ package UI;
 
 import javax.swing.*;
 
-import ObjectTools.Line2;
-import ObjectTools.ObjectList;
-import ObjectTools.Objecto2;
-import gamePrefabs.Aimer;
-import gamePrefabs.Ball;
-import map_creator.MapManager;
+import UI.pages.Game;
+import UI.pages.MainMenu;
+import UI.pages.Pages;
+import UI.pages.PlayerSelector;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class UIManager{
     public static JFrame finestraGioco;
+    public static Pages currentPage = Pages.NONE;
+    private static Component content = new JLabel("tmp");
     public static final int WINDOWS_HEIGHT=900;
     public static final int WINDOWS_WIDTH=1200;
-    public static final int GAME_HEIGHT=750;
+    public static final int GAME_HEIGHT=550;
     public static final int GAME_WIDTH=750;
-    public static PanelOnTheLeft panelontheleft;
-    public static PanelOnTheRight panelOnTheRight;
-    public static PanelBottom panelbottom;
-    public static Disegno panelOnTheCenter;
 
-    
-    public UIManager(String nameofFrame){
-        settingFrame(nameofFrame);
-        setLayoutUp();
-        creazioneCampoDiGioco();
-    }
-    public void settingFrame(String nameofFrame){
+    public static void initPage(String nameofFrame){
         finestraGioco= new JFrame(nameofFrame);
-
+        finestraGioco.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         finestraGioco.setSize(WINDOWS_WIDTH, WINDOWS_HEIGHT);
-        finestraGioco.setVisible(true);
         finestraGioco.setLayout(null);
+        finestraGioco.setVisible(true);
+        finestraGioco.add(content);
+        goToPage(Pages.MAIN_MENU);
     }
-    public void addComponent(JComponent componenToAdd){
-        this.finestraGioco.add(componenToAdd);
-        
-    }
-
-    public void setLayoutUp(){
-
-
-        panelontheleft= new PanelOnTheLeft(0,0,(WINDOWS_WIDTH-GAME_WIDTH)/2,WINDOWS_HEIGHT);
-        panelOnTheRight= new PanelOnTheRight((WINDOWS_WIDTH-GAME_WIDTH)/2+GAME_WIDTH, 0, (WINDOWS_WIDTH-GAME_WIDTH)/2, WINDOWS_HEIGHT);
-        panelOnTheCenter = new Disegno();
-        panelOnTheCenter.setBounds((WINDOWS_WIDTH-GAME_WIDTH)/2, 0,GAME_WIDTH,GAME_HEIGHT);
-        //panelOnTheCenter= new PanelOnTheCenter((WINDOWS_WIDTH-GAME_WIDTH)/2, 0,GAME_WIDTH,GAME_HEIGHT);
-
-
-        //dichiarazione del pannello in basso
-        panelbottom= new PanelBottom(panelontheleft.getWidth(), panelOnTheCenter.getHeight(), UIManager.WINDOWS_WIDTH-panelOnTheRight.getWidth()-panelOnTheRight.getWidth(), UIManager.WINDOWS_HEIGHT-panelOnTheCenter.getHeight());
-        
-        this.addComponent(panelontheleft);
-        this.addComponent(panelOnTheCenter);
-
-        this.addComponent(panelOnTheRight);
-        this.addComponent(panelbottom);
-    }
-
-    public void creazioneCampoDiGioco(){
-        MapManager.setMapFromPNG(MapManager.imagename);
-        Objecto2 pallina= new Ball(300, 300, Color.CYAN);
-        pallina.momentum[0]=1;
-        ObjectList.objects.add(pallina);
-        ObjectList.objects.add(new Aimer(200,200, new Ball(0,0,Color.RED)));
-        Objecto2 lineasinistra= new Line2(-1, 750, -1, 0);
-        Objecto2 lineadestra= new Line2(750, 0, 750, 750);
-        Objecto2 lineasu= new Line2(0, -1, 750, -1);
-        ObjectList.objects.add(lineadestra);
-        ObjectList.objects.add(lineasinistra);
-        ObjectList.objects.add(lineasu);
+    public static void goToPage(Pages page){
+        finestraGioco.remove(content);
+        currentPage = page;
+        switch (page){
+            case Pages.PLAYER_SELECTOR:
+                content = finestraGioco.add( new PlayerSelector());
+                break;
+            case Pages.GAME:
+                content = finestraGioco.add( new Game());
+                break;
+            case Pages.MAIN_MENU:
+                content = finestraGioco.add( new MainMenu());
+                break;
+        }
+        finestraGioco.revalidate();
+        finestraGioco.repaint();
     }
 }

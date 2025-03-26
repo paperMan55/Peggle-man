@@ -2,6 +2,10 @@ package game;
 
 import ObjectTools.ObjectList;
 import UI.Disegno;
+import UI.pages.Pages;
+import UI.UIManager;
+
+import java.util.Objects;
 
 public class Clock extends Thread {
     private static Disegno d;
@@ -9,7 +13,7 @@ public class Clock extends Thread {
     public static double deltaTime = 0;
     public static int fpsLimit = 10000;
     private static long exTime = 0;
-    public static float timeScale = 1f;
+    public static float timeScale = 0.2f;
 
     public Clock(Disegno graphic) {
 
@@ -21,6 +25,9 @@ public class Clock extends Thread {
     @Override
     public void run() {
         while (true) {
+            if(!Objects.equals(UIManager.currentPage, Pages.GAME)){
+                this.interrupt();
+            }
             if(flag) {
                 flag = false;
                 drawFrame();
@@ -54,4 +61,5 @@ public class Clock extends Thread {
 
         exTime = tmp;
     }
+
 }

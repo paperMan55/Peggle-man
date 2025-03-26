@@ -67,11 +67,6 @@ public class Disegno extends JPanel {
         risolvo le collisioni solo dopo aver controllato tutti gli oggetti altrimenti
         solo uno dei due oggetti che collidono vede la collisione
          */
-        for(Collision c:ObjectList.collisions.values()){
-
-
-            c.resolve();
-        }
-        ObjectList.collisions.clear();
+        ObjectList.resolveCollisions();
     }
 }

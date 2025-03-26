@@ -2,13 +2,14 @@ package gamePrefabs;
 
 import ObjectTools.ObjectList;
 import ObjectTools.Objecto2;
-import ObjectTools.Rectangle2;
+import UI.pages.Game;
 import UI.UIManager;
+import game.GameManager;
+import game.Player;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class Aimer extends Objecto2{
     public Objecto2 toShoot;
@@ -25,7 +26,10 @@ public class Aimer extends Objecto2{
         UIManager.finestraGioco.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Point pos = UIManager.panelOnTheCenter.getMousePosition();
+                if(GameManager.players.get(GameManager.currentPlayer).balls<=0){
+                    return;
+                }
+                Point pos = Game.panelOnTheCenter.getMousePosition();
                 angle = (pos.y - position[1])/(pos.x - position[0]);
                 double forceY = Math.sqrt(force*force/(1/(angle*angle) + 1)) * (pos.y >= position[1]?1:-1);
                 double forceX = Math.sqrt(force*force - forceY*forceY) * (pos.x >= position[0]?1:-1);
@@ -34,7 +38,9 @@ public class Aimer extends Objecto2{
 
                 ObjectList.addObject(o);
                 o.addForce(forceX,forceY);
-
+                Player p = GameManager.getCurrentPlayer();
+                p.balls--;
+                Game.panelontheleft.setBalls_left(p.balls);
             }
         });
     }
@@ -60,16 +66,7 @@ public class Aimer extends Objecto2{
         return new float[0];
     }
 
-    @Override
-    public void onCollisionEnter(Objecto2 o) {
 
-    }
-
-    @Override
-    public void onUpdate()   {
-
-
-    }
     @Override
     public Objecto2 getCopy() {
         Objecto2 copy = new Aimer(position[0],position[1], this.toShoot);

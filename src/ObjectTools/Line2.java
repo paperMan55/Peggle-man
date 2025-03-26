@@ -66,4 +66,14 @@ public class Line2 extends Objecto2{
 
 	@Override
 	public void onCollisionEnter(Objecto2 o) {}
+
+    @Override
+    public void onCollisionExit(Objecto2 o) {
+
+    }
+
+    @Override
+    public void onCollisionStay(Objecto2 o) {
+
+    }
 }
