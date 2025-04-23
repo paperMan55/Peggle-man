@@ -40,8 +40,6 @@ public class Collision {
                 main_obj.onCollisionExit(second_obj);
                 break;
         }
-
-
     }
 
     @Override
