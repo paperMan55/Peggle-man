@@ -9,6 +9,8 @@ public class ObjectList { //questa classe non fa altro che tenere tutti gli ogge
     public static HashMap<Collision,Objecto2> collisions = new HashMap<>();
     private static HashMap<Collision,Objecto2> exCollisions = new HashMap<>();
 
+    private static boolean toClear = false;
+
     public static void addObject(Objecto2 obj){
         modificationQueue.put(obj,true);
     }
@@ -16,10 +18,16 @@ public class ObjectList { //questa classe non fa altro che tenere tutti gli ogge
         modificationQueue.put(obj,false);
     }
     public static void updateList(){
+        if(toClear){
+            toClear= false;
+            immediateClearAll();
+            return;
+        }
         for (Map.Entry<Objecto2,Boolean> obj: modificationQueue.entrySet()){
             if(obj.getValue()){
                 objects.add(obj.getKey());
             }else {
+                obj.getKey().onDestroy(false);
                 objects.remove(obj.getKey());
             }
         }
@@ -50,5 +58,18 @@ public class ObjectList { //questa classe non fa altro che tenere tutti gli ogge
         }
         return null;
     }
+    public static void clearAll(){
+        toClear = true;
+    }
+    public static void immediateClearAll(){
+        for(Objecto2 obj: objects){
+            obj.onDestroy(true);
+        }
+        objects = new ArrayList<>();
+        modificationQueue = new HashMap<>();
+        collisions = new HashMap<>();
+        exCollisions = new HashMap<>();
+    }
+
 }
 //oggetto che contiene tutti gli oggetti della mappa

@@ -55,7 +55,7 @@ public class Rectangle2 extends Objecto2{
 
         float momentumM = momentum[1]/momentum[0];
         float[] toAdjust = adjustPosition(o);
-        new Collision(this,o,toAdjust, momentumM,lineM);
+        new Collision(this,o,toAdjust, momentumM,new float[]{-(o.position[1]-o.size[1]), (o.position[0]-o.size[0])});
         return true;
     }
 

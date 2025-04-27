@@ -3,6 +3,7 @@ package UI.pages;
 import UI.UIManager;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,14 +19,18 @@ public class MainMenu extends JPanel {
                 UIManager.goToPage(Pages.PLAYER_SELECTOR);
             }
         });
+
         b.setBounds(0,0,200,200);
         add(b);
-        JLabel t = new JLabel("ajgnjearaen");
-        t.setBounds(300,300,300,300);
-        t.setVisible(true);
-        add(t);
         setVisible(true);
+        ImageIcon imageIcon = new ImageIcon("src/Images/peggleMan_logo.png"); // load the image to a imageIcon
+        Image image = imageIcon.getImage(); // transform it
+        Image newimg = image.getScaledInstance(400, 100,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        imageIcon = new ImageIcon(newimg);  // transform it back
 
+        JLabel l= new JLabel(imageIcon);
+        l.setBounds(200,200,400,100);
+        add(l);
 
     }
 }

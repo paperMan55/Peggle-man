@@ -2,10 +2,7 @@ package UI;
 
 import javax.swing.*;
 
-import UI.pages.Game;
-import UI.pages.MainMenu;
-import UI.pages.Pages;
-import UI.pages.PlayerSelector;
+import UI.pages.*;
 
 import java.awt.*;
 
@@ -18,29 +15,28 @@ public class UIManager{
     public static final int GAME_HEIGHT=550;
     public static final int GAME_WIDTH=750;
 
-    public static void initPage(String nameofFrame){
-        finestraGioco= new JFrame(nameofFrame);
+    public static void initPage(Pages mainpage){
+        finestraGioco= new JFrame(mainpage.name());
         finestraGioco.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         finestraGioco.setSize(WINDOWS_WIDTH, WINDOWS_HEIGHT);
         finestraGioco.setLayout(null);
         finestraGioco.setVisible(true);
         finestraGioco.add(content);
-        goToPage(Pages.MAIN_MENU);
+        goToPage(mainpage);
     }
     public static void goToPage(Pages page){
         finestraGioco.remove(content);
         currentPage = page;
-        switch (page){
-            case Pages.PLAYER_SELECTOR:
-                content = finestraGioco.add( new PlayerSelector());
-                break;
-            case Pages.GAME:
-                content = finestraGioco.add( new Game());
-                break;
-            case Pages.MAIN_MENU:
-                content = finestraGioco.add( new MainMenu());
-                break;
-        }
+        JPanel panel = switch (page) {
+            case Pages.PLAYER_SELECTOR -> new PlayerSelector();
+            case Pages.GAME -> new Game();
+            case Pages.MAIN_MENU -> new MainMenu();
+            case Pages.TEST -> new Test();
+            case Pages.END_GAME -> new EndGame();
+            default -> null;
+        };
+        panel.setBounds(0,0,WINDOWS_WIDTH,WINDOWS_HEIGHT);
+        content = finestraGioco.add(panel);
         finestraGioco.revalidate();
         finestraGioco.repaint();
     }

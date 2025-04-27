@@ -59,7 +59,6 @@ public class Disegno extends JPanel {
 
     public void update(){
         for (Objecto2 o:ObjectList.objects ) {
-
             o.update();
         }
 

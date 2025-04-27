@@ -51,11 +51,10 @@ public class Image2 extends Objecto2{
             return false;
         }
 
-        float lineM = (o.position[1]-o.size[1])/(o.position[0]-o.size[0]);//coefficiente angolare retta
 
         float momentumM = momentum[1]/momentum[0];
         float[] toAdjust = adjustPosition(o);
-        new Collision(this,o,toAdjust, momentumM,lineM);
+        new Collision(this,o,toAdjust, momentumM,new float[]{-(o.position[1]-o.size[1]), (o.position[0]-o.size[0])});
         return true;
     }
 

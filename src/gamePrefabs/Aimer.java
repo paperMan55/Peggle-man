@@ -14,7 +14,8 @@ import java.awt.event.MouseEvent;
 public class Aimer extends Objecto2{
     public Objecto2 toShoot;
     private float angle;
-    private static float force= 1000;
+    private static final float force= 600;
+    private final MouseAdapter mouseAdapter;
 
     public Aimer(float posX, float posY, Objecto2 object) {
         super(posX, posY, 10,10);
@@ -23,18 +24,25 @@ public class Aimer extends Objecto2{
         type = Objecto2.SQUARE;
         static_ = true;
         solid = false;
-        UIManager.finestraGioco.addMouseListener(new MouseAdapter() {
+        mouseAdapter = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(GameManager.players.get(GameManager.currentPlayer).balls<=0){
+
+                if(GameManager.players.get(GameManager.currentPlayer).balls<=0 || !GameManager.canShoot){
                     return;
                 }
+                GameManager.canShoot = false;
                 Point pos = Game.panelOnTheCenter.getMousePosition();
+                if(pos == null){
+                    return;
+                }
                 angle = (pos.y - position[1])/(pos.x - position[0]);
                 double forceY = Math.sqrt(force*force/(1/(angle*angle) + 1)) * (pos.y >= position[1]?1:-1);
                 double forceX = Math.sqrt(force*force - forceY*forceY) * (pos.x >= position[0]?1:-1);
                 System.out.println("forces: ["+forceX+";"+forceY+"]");
-                Objecto2 o = new Ball(position[0],position[1],Color.RED);
+
+                Objecto2 o = toShoot.getCopy();
+                o.position = new float[]{position[0]-toShoot.size[0]/2,position[1]-toShoot.size[1]/2};
 
                 ObjectList.addObject(o);
                 o.addForce(forceX,forceY);
@@ -42,7 +50,8 @@ public class Aimer extends Objecto2{
                 p.balls--;
                 Game.panelontheleft.setBalls_left(p.balls);
             }
-        });
+        };
+        UIManager.finestraGioco.addMouseListener(mouseAdapter);
     }
 
 
@@ -83,5 +92,10 @@ public class Aimer extends Objecto2{
         copy.color = this.color;
         copy.solid = this.solid;
         return copy;
+    }
+
+    @Override
+    public void onDestroy(boolean forced) {
+        UIManager.finestraGioco.removeMouseListener(mouseAdapter);
     }
 }

@@ -11,10 +11,7 @@ import UI.PanelOnTheRight;
 import UI.UIManager;
 import game.Clock;
 import game.GameManager;
-import gamePrefabs.Aimer;
-import gamePrefabs.Ball;
-import gamePrefabs.BallTester;
-import gamePrefabs.BottomTrigger;
+import gamePrefabs.*;
 import map_creator.MapManager;
 
 import javax.swing.*;
@@ -33,7 +30,7 @@ public class Game extends JPanel {
 
     public Game(){
 
-        this.setBounds(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT);
+
         this.setLayout(null);
         panelontheleft= new PanelOnTheLeft(0,0,(WINDOWS_WIDTH-GAME_WIDTH)/2,WINDOWS_HEIGHT);
         panelOnTheRight= new PanelOnTheRight((WINDOWS_WIDTH-GAME_WIDTH)/2+GAME_WIDTH, 0, (WINDOWS_WIDTH-GAME_WIDTH)/2, WINDOWS_HEIGHT);
@@ -57,21 +54,27 @@ public class Game extends JPanel {
     }
 
     public void creazioneCampoDiGioco(){
-        /*
+        ObjectList.immediateClearAll();
         MapManager.setMapFromPNG(MapManager.imagename);
-        ObjectList.objects.add(new Aimer(GAME_WIDTH/2f,0, new Ball(0,0,Color.RED)));
+        ObjectList.objects.add(new Aimer(GAME_WIDTH/2f,10, new CannonBall(0,0,Color.GREEN)));
         Objecto2 lineasinistra= new Line2(-1, 750, -1, 0);
         Objecto2 lineadestra= new Line2(750, 0, 750, 750);
         Objecto2 lineasu= new Line2(0, -1, 750, -1);
+
+        Objecto2 blackhole = new Line2(800,500,0,300);
         ObjectList.objects.add(lineadestra);
         ObjectList.objects.add(lineasinistra);
         ObjectList.objects.add(lineasu);
         ObjectList.objects.add(new BottomTrigger());
-        */
+        //ObjectList.objects.add(blackhole);
+
+        /*
         BallTester b = new BallTester();
         ObjectList.addObject(b);
         ObjectList.addObject(new Circle2(300,300,80));
         System.out.println("zio billy");
+
+         */
 
 
     }

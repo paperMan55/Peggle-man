@@ -2,15 +2,16 @@ package gamePrefabs;
 
 import ObjectTools.Circle2;
 import ObjectTools.Objecto2;
+import ObjectTools.SphereCast;
 import game.GameManager;
 
 import java.awt.*;
-import java.time.Duration;
+import java.util.ArrayList;
 
-public class Ball extends Circle2 {
+public class CannonBall extends Circle2 {
     public static int BALL_SIZE = 20;
     private int combo = 1;
-    public Ball(float posX, float posY, Color color) {
+    public CannonBall(float posX, float posY, Color color) {
         super(posX, posY, BALL_SIZE, color);
         static_ = false;
         bounce = 0.5f;
@@ -22,9 +23,17 @@ public class Ball extends Circle2 {
     public void onCollisionEnter(Objecto2 o) {
 
         if(o.getClass() == Peg.class){
-            GameManager.addPoints(((Peg) o).value*combo);
-            combo ++;
-            o.destroy();
+            ArrayList<Objecto2> objs = new SphereCast(position,65).overlap();
+            for (Objecto2 ob:objs){
+                if(ob.getClass() == Peg.class){
+                    GameManager.addPoints(((Peg) ob).value * combo);
+                    combo++;
+                    ob.destroy();
+                }
+            }
+            GameManager.endTurn(combo);
+            destroy();
+
         }
 
         if(o.getClass() == BottomTrigger.class){
@@ -36,7 +45,7 @@ public class Ball extends Circle2 {
 
     @Override
     public Objecto2 getCopy() {
-        Objecto2 copy = new Ball(position[0],position[1],color);
+        Objecto2 copy = new CannonBall(position[0],position[1],color);
         copy.type = this.type;
         copy.static_ = this.static_;
         copy.debug = this.debug;

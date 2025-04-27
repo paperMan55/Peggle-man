@@ -63,11 +63,15 @@ public abstract class Objecto2 {
     }
 
     public void addForce(double xForce, double yForce){
-        momentum[0] += xForce;
-        momentum[1] += yForce;
+        momentum[0] += (float) xForce;
+        momentum[1] += (float) yForce;
+    }
+    public void addForce(double[] force){
+        addForce(force[0],force[1]);
     }
 
     public void update(){
+
         if (!static_){
             momentum[0] -= momentum[0] * (drag);
             momentum[1] -= (float) (momentum[1] * (drag) - gravity* Clock.deltaTime* 100);
@@ -103,46 +107,50 @@ public abstract class Objecto2 {
     public abstract boolean collideWithSquare(Objecto2 o);
     public abstract boolean collideWithLine(Objecto2 o);
     //ang è il coefficiente angolare tra y/x
-    public void resolveBounce(float angObj){
-        float angObj2move = momentum[1]/momentum[0];
 
-        if(angObj-angObj2move == 0){
+    public void resolveBounce(float[] normal){
+        if(getVelocity()==0){
             return;
         }
+        double ang = Math.atan2(momentum[1],momentum[0] );
+        ang = Math.toDegrees(ang);
 
-        double momentumForce = getVelocity();
-        double angBetween = Math.atan(Math.abs((angObj-angObj2move)/(angObj*angObj2move+1))); //in radiant
-        if(Double.isInfinite(angObj2move)){
-            angBetween = Math.PI/2 - Math.atan(angObj);
+        double ang1 = Math.atan2(normal[1],normal[0]);
+        ang1 = Math.toDegrees(ang1);
+
+        if(ang<0){
+            ang = 360 + ang;
         }
-        double repelF = Math.sin(angBetween)* momentumForce;
-
-        double outputX;
-        double outputY;
-        if(angObj == 0){
-            outputX = 0;
-            outputY = momentum[1];
-        }else if(Double.isInfinite(angObj)){
-            outputX = momentum[0];
-            outputY = 0;
-        } else{
-            double perpendicularM = -1/angObj;
-            outputX = repelF / Math.sqrt(1+perpendicularM*perpendicularM);
-            outputY = outputX * perpendicularM;
+        if(ang1<0){
+            ang1 = 360 + ang1;
+        }
+        if((ang>ang1-90 && ang<ang1+90)){
+            System.out.println("ritornato");
+            return; //se sta andando nella direzione della normale non sta sbattendo
+        }
+        double ang3 = 0;
+        double tmp = (ang+180)%360;
+        double diff = Math.abs(tmp-ang1);
+        double force_to_apply = Math.abs(getVelocity()*Math.cos(Math.toRadians(diff)));
+        if(tmp>ang1){
+            ang3 = tmp-(2*diff);
+        }else{
+            ang3 = tmp+(2*diff);
         }
 
-        double tmpX = momentum[0] + outputX+outputX*bounce;
-        double tmpY = momentum[1] + outputY+outputY*bounce;
+        ang3 = Math.toRadians(ang3);
+        double v = getVelocity();
+        /*
+        momentum[0] = (float)(Math.cos(ang3) * v)*bounce;
+        momentum[1] = (float)(Math.sin(ang3) * v)*bounce;
+         */
+        System.out.println(ang1);
+        float forceX = (float)(force_to_apply * Math.cos(Math.toRadians(ang1)));
+        float forceY = (float)(force_to_apply * Math.sin(Math.toRadians(ang1)));
+        momentum[0] += forceX+forceX*bounce;
+        momentum[1] += forceY+forceY*bounce;
+        System.out.println("["+forceX+" ; "+forceY+"]");
 
-        //momentum[0] += (float) (momentum[0]>0? -tmpX:tmpX); // sbagliato
-        //momentum[1] += (float) (momentum[1]>0? -tmpY:tmpY);
-
-        if(angObj>=0){  //e complicato
-            momentum[0] += (float) (momentum[1]>=0? tmpX:-tmpX);
-        }else {
-            momentum[0] += (float) (momentum[1]>=0? -tmpX:tmpX);
-        }
-        momentum[1] += (float) (momentum[1]>=0? -tmpY:tmpY);
     }
 
 
@@ -187,6 +195,7 @@ public abstract class Objecto2 {
 
     public void destroy(){
         ObjectList.removeObject(this);
+
     }
     public void destroy(int millis) {
         Objecto2 o = this;
@@ -198,6 +207,7 @@ public abstract class Objecto2 {
             }
             ObjectList.removeObject(o);
             System.out.println("destroyed");
+
         }).start();
     }
     public void move(float[] toMove){
@@ -205,6 +215,7 @@ public abstract class Objecto2 {
         this.position[1] += toMove[1];
     }
     public void onUpdate(){};
+    public void onDestroy(boolean forced){};
     public void move(float x, float y){
         this.position[0] += x;
         this.position[1] += y;

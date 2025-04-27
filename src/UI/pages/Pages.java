@@ -4,5 +4,7 @@ public enum Pages {
     GAME,
     MAIN_MENU,
     PLAYER_SELECTOR,
-    NONE
+    NONE,
+    TEST,
+    END_GAME
 }

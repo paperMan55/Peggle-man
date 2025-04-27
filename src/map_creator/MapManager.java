@@ -21,7 +21,7 @@ public class MapManager {
 
 static JFrame thisframe;
 static Disegno thisdisegno;
-public static String imagename= "samuele_e_mario_rinco";
+public static String imagename= "samuele_e_mario_rinco.png";
 static BufferedImage backgroundImage;
 public static ArrayList<Peg> listapegstatica;
 public MapManager(){
@@ -87,15 +87,6 @@ public MapManager(){
         listapegstatica=listaPeg;
         return listaPeg;
     }
-    public static void createWindow(){
-        thisframe= new JFrame("diocanvuoifunzionarediocandiocan");
-        thisframe.setSize(UIManager.WINDOWS_WIDTH, UIManager.WINDOWS_HEIGHT);
-        
-        thisdisegno = new Disegno();
-        thisframe.add(thisdisegno);
-
-        thisframe.setVisible(true);
-    }
 
     public static ArrayList<Peg> getListapeg() {
         return listapegstatica;
@@ -103,7 +94,7 @@ public MapManager(){
 
     public static BufferedImage getImage(String nameofImage){
         try {
-            backgroundImage= ImageIO.read(new File("src/Images/"+nameofImage+".png"));
+            backgroundImage= ImageIO.read(new File("src/Images/"+nameofImage));
             //g.drawImage(backgroundImage, 0, 0, null);
     
             //System.out.println(backgroundImage.getType());

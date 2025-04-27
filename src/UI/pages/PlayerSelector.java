@@ -65,7 +65,6 @@ public class PlayerSelector extends JPanel {
         });
         form.add(add);
         add.setBounds(400,10,100,20);
-        System.out.println("thfuzvböohb");
         add(form);
 
         repaint();
