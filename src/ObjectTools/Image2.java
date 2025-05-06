@@ -19,6 +19,7 @@ public class Image2 extends Objecto2{
         type = Objecto2.IMAGE;
     }
     public Image2(int posX, int posY, float width, float height, Image image) {
+
         super(posX, posY, width, height, image);
         type = Objecto2.IMAGE;
 
@@ -133,7 +134,7 @@ public class Image2 extends Objecto2{
         copy.momentum[0] = this.momentum[0];
         copy.momentum[1] = this.momentum[1];
         copy.size = this.size;
-        copy.image = this.image;
+        copy.texture = this.texture;
         copy.drag = this.drag;
         copy.gravity = this.gravity;
         copy.bounce = this.bounce;

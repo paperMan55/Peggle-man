@@ -1,3 +1,4 @@
+import ObjectTools.AnimatedTexture;
 import UI.UIManager;
 import UI.pages.Pages;
 
@@ -10,5 +11,5 @@ public class Main {
         UIManager.initPage(Pages.MAIN_MENU);
 
     }
-    //@TODO mettere qua clock.start e poi boh
+
 }

@@ -1,6 +1,5 @@
 package UI;
 
-import ObjectTools.Collision;
 import ObjectTools.ObjectList;
 import ObjectTools.Objecto2;
 import game.Clock;
@@ -12,35 +11,45 @@ import java.util.ArrayList;
 
 public class Disegno extends JPanel {
     public static ArrayList<float[]> pointDebuggers = new ArrayList<>();
-
+    JLabel fps = new JLabel();
+    public Disegno(){
+        setLayout(null);
+        fps.setBounds(0,0,100,20);
+        add(fps);
+        Clock clock = new Clock(this);
+        clock.start();
+    }
 
 
 
     public void paint(Graphics g){
-        
+
 
         Toolkit.getDefaultToolkit().sync(); // altrimenti lagga in linux
         super.paint(g);
+        fps.setText((int)(1/Clock.deltaTime)+"");
 
         for (Objecto2 o: ObjectList.objects) {
             g.setColor(o.color);
-            switch (o.type){
-                case Objecto2.LINE:
+            if(o.texture ==null){
+                switch (o.type){
+                    case Objecto2.LINE:
 
-                    g.drawLine(Math.round(o.position[0]),Math.round(o.position[1]),Math.round(o.size[0]),Math.round(o.size[1]));
-                    break;
-                case Objecto2.SQUARE:
-                    g.fillRect(Math.round(o.position[0]),Math.round(o.position[1]),Math.round(o.size[0]),Math.round(o.size[1]));
+                        g.drawLine(Math.round(o.position[0]),Math.round(o.position[1]),Math.round(o.size[0]),Math.round(o.size[1]));
+                        break;
+                    case Objecto2.SQUARE:
+                        g.fillRect(Math.round(o.position[0]),Math.round(o.position[1]),Math.round(o.size[0]),Math.round(o.size[1]));
 
-                    break;
-                case Objecto2.OVAL:
-                    g.fillOval(Math.round(o.position[0]),Math.round(o.position[1]),Math.round(o.size[0]),Math.round(o.size[1]));
+                        break;
+                    case Objecto2.OVAL:
+                        g.fillOval(Math.round(o.position[0]),Math.round(o.position[1]),Math.round(o.size[0]),Math.round(o.size[1]));
+                        break;
+                }
+            }else{
+                g.drawImage(o.texture.getCurrentImage(),Math.round(o.position[0]),Math.round(o.position[1]),this);
 
-                    break;
-                case Objecto2.IMAGE:
-                    g.drawImage(o.image,Math.round(o.position[0]),Math.round(o.position[1]),this);
-                    break;
             }
+
         }
         g.setColor(Color.RED);
         for(float[] point : pointDebuggers){

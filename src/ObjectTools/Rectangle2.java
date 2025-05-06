@@ -38,10 +38,10 @@ public class Rectangle2 extends Objecto2{
             return false;
         }
         boolean res = false;
-        res = collideWithLine(new Line2(o.position[0],o.position[1],o.position[0]+o.size[0],o.position[1]));
+        res = collideWithLine(new Line2(o.position[0]+o.size[0],o.position[1],o.position[0],o.position[1]));
         res = res || collideWithLine(new Line2(o.position[0],o.position[1],o.position[0],o.position[1]+o.size[1]));
-        res = res || collideWithLine(new Line2(o.position[0]+o.size[0],o.position[1],o.position[0]+o.size[0],o.position[1]+o.size[1]));
-        res = res || collideWithLine(new Line2(o.position[0],o.position[1]+o.size[1],o.position[0]+o.size[0],o.position[1]));
+        res = res || collideWithLine(new Line2(o.position[0]+o.size[0],o.position[1]+o.size[1],o.position[0]+o.size[0],o.position[1]));
+        res = res || collideWithLine(new Line2(o.position[0],o.position[1]+o.size[1],o.position[0]+o.size[0],o.position[1]+o.size[1]));
         return res;
     }
 
@@ -137,7 +137,7 @@ public class Rectangle2 extends Objecto2{
         copy.momentum[0] = this.momentum[0];
         copy.momentum[1] = this.momentum[1];
         copy.size = this.size;
-        copy.image = this.image;
+        copy.texture = this.texture;
         copy.drag = this.drag;
         copy.gravity = this.gravity;
         copy.bounce = this.bounce;

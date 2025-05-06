@@ -4,8 +4,6 @@ import game.Clock;
 
 import java.awt.*;
 
-import java.time.Duration;
-import java.util.ArrayList;
 import java.lang.*;
 
 public abstract class Objecto2 {
@@ -21,7 +19,7 @@ public abstract class Objecto2 {
     public float[] position;
     public float[] momentum;
     public float[] size;
-    public Image image;
+    public Texture texture;
     public float drag;
     public float gravity;
     public float bounce;
@@ -56,7 +54,7 @@ public abstract class Objecto2 {
         
     }
     public Objecto2(int posX, int posY, float width, float height, Image image){
-        this.image = image;
+        this.texture = new StillTexture(image);
         position = new float[]{posX, posY};
         size = new float[]{width,height};
         momentum = new float[]{0,0};
@@ -125,7 +123,6 @@ public abstract class Objecto2 {
             ang1 = 360 + ang1;
         }
         if((ang>ang1-90 && ang<ang1+90)){
-            System.out.println("ritornato");
             return; //se sta andando nella direzione della normale non sta sbattendo
         }
         double ang3 = 0;
@@ -144,12 +141,12 @@ public abstract class Objecto2 {
         momentum[0] = (float)(Math.cos(ang3) * v)*bounce;
         momentum[1] = (float)(Math.sin(ang3) * v)*bounce;
          */
-        System.out.println(ang1);
+
         float forceX = (float)(force_to_apply * Math.cos(Math.toRadians(ang1)));
         float forceY = (float)(force_to_apply * Math.sin(Math.toRadians(ang1)));
         momentum[0] += forceX+forceX*bounce;
         momentum[1] += forceY+forceY*bounce;
-        System.out.println("["+forceX+" ; "+forceY+"]");
+
 
     }
 

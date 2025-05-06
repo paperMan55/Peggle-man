@@ -19,7 +19,7 @@ public class EndGame extends JPanel {
 
         setLayout(null);
         ArrayList<Player> players = GameManager.players;
-        System.out.println(players.size());
+
         for (int i = 0; i < players.size(); i++) {
             PlayerEntry p = new PlayerEntry(players.get(i));
             player_entries.add(p);

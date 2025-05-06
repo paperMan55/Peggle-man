@@ -1,9 +1,6 @@
 package UI.pages;
 
-import ObjectTools.Circle2;
-import ObjectTools.Line2;
-import ObjectTools.ObjectList;
-import ObjectTools.Objecto2;
+import ObjectTools.*;
 import UI.Disegno;
 import UI.PanelBottom;
 import UI.PanelOnTheLeft;
@@ -49,24 +46,26 @@ public class Game extends JPanel {
         this.add(panelbottom);
         creazioneCampoDiGioco();
 
-        Clock clock = new Clock(Game.panelOnTheCenter);
-        clock.start();
+
     }
 
     public void creazioneCampoDiGioco(){
         ObjectList.immediateClearAll();
         MapManager.setMapFromPNG(MapManager.imagename);
-        ObjectList.objects.add(new Aimer(GAME_WIDTH/2f,10, new CannonBall(0,0,Color.GREEN)));
+        ObjectList.objects.add(new Aimer(GAME_WIDTH/2f,10, new Ball(0,0)));
         Objecto2 lineasinistra= new Line2(-1, 750, -1, 0);
         Objecto2 lineadestra= new Line2(750, 0, 750, 750);
         Objecto2 lineasu= new Line2(0, -1, 750, -1);
 
-        Objecto2 blackhole = new Line2(800,500,0,300);
+
+        Objecto2 blackhole = new BlackHole(300,100,400,80);
+
         ObjectList.objects.add(lineadestra);
         ObjectList.objects.add(lineasinistra);
         ObjectList.objects.add(lineasu);
         ObjectList.objects.add(new BottomTrigger());
-        //ObjectList.objects.add(blackhole);
+        ObjectList.objects.add(blackhole);
+
 
         /*
         BallTester b = new BallTester();

@@ -1,5 +1,6 @@
 package ObjectTools;
 
+import javax.xml.transform.Source;
 import java.awt.*;
 
 public class Collision {
@@ -24,8 +25,7 @@ public class Collision {
     }
     public void resolve(int type){
 
-        if(!main_obj.static_ && main_obj.solid && second_obj.solid && type!=EXIT){
-
+        if((!main_obj.static_) && main_obj.solid && second_obj.solid && type!=EXIT){
             main_obj.move(pos_adjust);
             main_obj.resolveBounce(surface_ang);
 
@@ -33,7 +33,7 @@ public class Collision {
         }
         switch (type){
             case ENTER:
-                System.out.println("ooooooooooooooo");
+
                 main_obj.onCollisionEnter(second_obj);
                 break;
             case STAY:

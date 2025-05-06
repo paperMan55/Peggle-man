@@ -39,7 +39,7 @@ public class Aimer extends Objecto2{
                 angle = (pos.y - position[1])/(pos.x - position[0]);
                 double forceY = Math.sqrt(force*force/(1/(angle*angle) + 1)) * (pos.y >= position[1]?1:-1);
                 double forceX = Math.sqrt(force*force - forceY*forceY) * (pos.x >= position[0]?1:-1);
-                System.out.println("forces: ["+forceX+";"+forceY+"]");
+
 
                 Objecto2 o = toShoot.getCopy();
                 o.position = new float[]{position[0]-toShoot.size[0]/2,position[1]-toShoot.size[1]/2};
@@ -52,6 +52,7 @@ public class Aimer extends Objecto2{
             }
         };
         UIManager.finestraGioco.addMouseListener(mouseAdapter);
+        UIManager.finestraGioco.requestFocus();
     }
 
 
@@ -85,7 +86,7 @@ public class Aimer extends Objecto2{
         copy.position = this.position;
         copy.momentum = this.momentum;
         copy.size = this.size;
-        copy.image = this.image;
+        copy.texture = this.texture;
         copy.drag = this.drag;
         copy.gravity = this.gravity;
         copy.bounce = this.bounce;

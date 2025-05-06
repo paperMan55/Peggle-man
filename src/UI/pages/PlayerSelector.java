@@ -120,7 +120,7 @@ public class PlayerSelector extends JPanel {
             PlayerEntry p = players.get(i);
             p.setBounds(700,100 + 50*i,500,40);
         }
-        System.out.println("reload");
+
         repaint();
     }
 }

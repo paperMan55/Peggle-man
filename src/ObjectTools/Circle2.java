@@ -52,10 +52,10 @@ public class Circle2 extends Objecto2{
             return false;
         }
         boolean res = false;
-        res = collideWithLine(new Line2(o.position[0],o.position[1],o.position[0]+o.size[0],o.position[1]));
+        res = collideWithLine(new Line2(o.position[0]+o.size[0],o.position[1],o.position[0],o.position[1]));
         res = res || collideWithLine(new Line2(o.position[0],o.position[1],o.position[0],o.position[1]+o.size[1]));
-        res = res || collideWithLine(new Line2(o.position[0]+o.size[0],o.position[1],o.position[0]+o.size[0],o.position[1]+o.size[1]));
-        res = res || collideWithLine(new Line2(o.position[0],o.position[1]+o.size[1],o.position[0]+o.size[0],o.position[1]));
+        res = res || collideWithLine(new Line2(o.position[0]+o.size[0],o.position[1]+o.size[1],o.position[0]+o.size[0],o.position[1]));
+        res = res || collideWithLine(new Line2(o.position[0],o.position[1]+o.size[1],o.position[0]+o.size[0],o.position[1]+o.size[1]));
         return res;
     }
 
@@ -117,15 +117,21 @@ public class Circle2 extends Objecto2{
         if(Math.abs(distance)>size[0]/2){
             return null; // vuol dire che il quadrato interseca ma non il cerchio
         }
+
         if(distance>0){
             distance = size[0]/2-distance;
         }else {
             distance =-size[0]/2-distance;
         }
         double perp = Math.atan(-1/lineM);
+
         float moveX = (float) (Math.cos(perp)*distance);
         float moveY = (float) (Math.sin(perp)*distance);
-
+        if(lineM==0 ){
+            return new float[]{0,distance};
+        }else if(Double.isInfinite(lineM)){
+            return new float[]{distance,0};
+        }
         return new float[]{moveX,moveY};
     }
 
@@ -155,7 +161,7 @@ public class Circle2 extends Objecto2{
         copy.momentum[0] = this.momentum[0];
         copy.momentum[1] = this.momentum[1];
         copy.size = this.size;
-        copy.image = this.image;
+        copy.texture = this.texture;
         copy.drag = this.drag;
         copy.gravity = this.gravity;
         copy.bounce = this.bounce;

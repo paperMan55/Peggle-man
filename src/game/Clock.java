@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class Clock extends Thread {
     private static Disegno d;
-    public static boolean flag = true;
+    public static boolean flag = false;
     public static double deltaTime = 0;
     public static int fpsLimit = 1000;
     private static long exTime = 0;
@@ -19,6 +19,7 @@ public class Clock extends Thread {
         super();
         exTime = System.nanoTime();
         d = graphic;
+
     }
 
     @Override
@@ -31,6 +32,7 @@ public class Clock extends Thread {
             }
 
             if(flag) {
+
                 flag = false;
                 drawFrame();
             }

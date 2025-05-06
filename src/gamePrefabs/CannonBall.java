@@ -1,29 +1,28 @@
 package gamePrefabs;
 
-import ObjectTools.Circle2;
-import ObjectTools.Objecto2;
-import ObjectTools.SphereCast;
+import ObjectTools.*;
 import game.GameManager;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-public class CannonBall extends Circle2 {
-    public static int BALL_SIZE = 20;
+public class CannonBall extends Ball {
     private int combo = 1;
-    public CannonBall(float posX, float posY, Color color) {
-        super(posX, posY, BALL_SIZE, color);
+    public  int range = 65;
+    public CannonBall(float posX, float posY) {
+        super(posX, posY);
         static_ = false;
         bounce = 0.5f;
         gravity = 5f;
         drag = 0f;
+        texture = new StillTexture("src/Images/ballMan_red.png",BALL_SIZE,BALL_SIZE);
     }
 
     @Override
     public void onCollisionEnter(Objecto2 o) {
 
         if(o.getClass() == Peg.class){
-            ArrayList<Objecto2> objs = new SphereCast(position,65).overlap();
+            ArrayList<Objecto2> objs = new SphereCast(position,range).overlap();
             for (Objecto2 ob:objs){
                 if(ob.getClass() == Peg.class){
                     GameManager.addPoints(((Peg) ob).value * combo);
@@ -33,6 +32,7 @@ public class CannonBall extends Circle2 {
             }
             GameManager.endTurn(combo);
             destroy();
+            ObjectList.addObject(new Explosion(getCenter(), range*2));
 
         }
 
@@ -45,7 +45,7 @@ public class CannonBall extends Circle2 {
 
     @Override
     public Objecto2 getCopy() {
-        Objecto2 copy = new CannonBall(position[0],position[1],color);
+        Objecto2 copy = new CannonBall(position[0],position[1]);
         copy.type = this.type;
         copy.static_ = this.static_;
         copy.debug = this.debug;
@@ -54,7 +54,7 @@ public class CannonBall extends Circle2 {
         copy.momentum[0] = this.momentum[0];
         copy.momentum[1] = this.momentum[1];
         copy.size = this.size;
-        copy.image = this.image;
+        copy.texture = this.texture;
         copy.drag = this.drag;
         copy.gravity = this.gravity;
         copy.bounce = this.bounce;

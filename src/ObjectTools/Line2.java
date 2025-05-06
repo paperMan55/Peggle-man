@@ -55,7 +55,7 @@ public class Line2 extends Objecto2{
         copy.momentum[0] = this.momentum[0];
         copy.momentum[1] = this.momentum[1];
         copy.size = this.size;
-        copy.image = this.image;
+        copy.texture = this.texture;
         copy.drag = this.drag;
         copy.gravity = this.gravity;
         copy.bounce = this.bounce;

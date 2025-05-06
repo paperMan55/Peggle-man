@@ -1,8 +1,9 @@
 package gamePrefabs;
 
 import ObjectTools.Circle2;
-import ObjectTools.ObjectList;
 import ObjectTools.Objecto2;
+import ObjectTools.StillTexture;
+import game.Cache;
 
 public class Peg extends Circle2 {
     /*
@@ -20,6 +21,7 @@ public class Peg extends Circle2 {
         super(x, y, SIZE);
         //this.position= new int[]{x, y};
         this.colorcod=colorcod;
+        this.texture = new StillTexture("src/Images/pegMan.png",(int)SIZE,(int)SIZE);
     }
 
     public int getColor() {

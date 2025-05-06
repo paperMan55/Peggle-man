@@ -27,7 +27,7 @@ public class UIManager{
     public static void goToPage(Pages page){
         finestraGioco.remove(content);
         currentPage = page;
-        JPanel panel = switch (page) {
+        Component panel = switch (page) {
             case Pages.PLAYER_SELECTOR -> new PlayerSelector();
             case Pages.GAME -> new Game();
             case Pages.MAIN_MENU -> new MainMenu();
@@ -39,5 +39,11 @@ public class UIManager{
         content = finestraGioco.add(panel);
         finestraGioco.revalidate();
         finestraGioco.repaint();
+    }
+
+    public static Point getWindowSize(){
+        int x = finestraGioco.getWidth();
+        int y = finestraGioco.getHeight();
+        return new Point(x,y);
     }
 }
