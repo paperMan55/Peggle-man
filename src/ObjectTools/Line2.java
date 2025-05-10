@@ -19,21 +19,21 @@ public class Line2 extends Objecto2{
     }
 
     @Override
-    public boolean collideWithCircle(Objecto2 o) {
+    public Collision collideWithCircle(Objecto2 o) {
         //I decided that lines cant move so... non need of this
-        return false;
+        return null;
     }
 
     @Override
-    public boolean collideWithSquare(Objecto2 o) {
+    public Collision collideWithSquare(Objecto2 o) {
         //I decided that lines cant move so... non need of this
-        return false;
+        return null;
     }
 
     @Override
-    public boolean collideWithLine(Objecto2 o) {
+    public Collision collideWithLine(Objecto2 o) {
         //I decided that lines cant move so... non need of this
-        return false;
+        return null;
     }
 
     @Override

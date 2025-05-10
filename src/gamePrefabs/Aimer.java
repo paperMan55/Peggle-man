@@ -1,5 +1,6 @@
 package gamePrefabs;
 
+import ObjectTools.Collision;
 import ObjectTools.ObjectList;
 import ObjectTools.Objecto2;
 import UI.pages.Game;
@@ -12,14 +13,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Aimer extends Objecto2{
-    public Objecto2 toShoot;
+
     private float angle;
     private static final float force= 600;
     private final MouseAdapter mouseAdapter;
 
-    public Aimer(float posX, float posY, Objecto2 object) {
+    public Aimer(float posX, float posY) {
         super(posX, posY, 10,10);
-        this.toShoot = object;
         color = Color.GREEN;
         type = Objecto2.SQUARE;
         static_ = true;
@@ -27,8 +27,9 @@ public class Aimer extends Objecto2{
         mouseAdapter = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
-                if(GameManager.players.get(GameManager.currentPlayer).balls<=0 || !GameManager.canShoot){
+                System.out.println("--------> "+GameManager.canShoot);
+                Player p = GameManager.getCurrentPlayer();
+                if(p.balls.size()<=0 || !GameManager.canShoot){
                     return;
                 }
                 GameManager.canShoot = false;
@@ -41,13 +42,13 @@ public class Aimer extends Objecto2{
                 double forceX = Math.sqrt(force*force - forceY*forceY) * (pos.x >= position[0]?1:-1);
 
 
-                Objecto2 o = toShoot.getCopy();
-                o.position = new float[]{position[0]-toShoot.size[0]/2,position[1]-toShoot.size[1]/2};
+                Objecto2 o = p.balls.getFirst();
+                o.position = new float[]{position[0]-o.size[0]/2,position[1]-o.size[1]/2};
 
                 ObjectList.addObject(o);
                 o.addForce(forceX,forceY);
-                Player p = GameManager.getCurrentPlayer();
-                p.balls--;
+
+                p.balls.removeFirst();
                 Game.panelontheleft.setBalls_left(p.balls);
             }
         };
@@ -57,18 +58,18 @@ public class Aimer extends Objecto2{
 
 
     @Override
-    public boolean collideWithCircle(Objecto2 o) {
-        return false;
+    public Collision collideWithCircle(Objecto2 o) {
+        return null;
     }
 
     @Override
-    public boolean collideWithSquare(Objecto2 o) {
-        return false;
+    public Collision collideWithSquare(Objecto2 o) {
+        return null;
     }
 
     @Override
-    public boolean collideWithLine(Objecto2 o) {
-        return false;
+    public Collision collideWithLine(Objecto2 o) {
+        return null;
     }
 
     @Override
@@ -79,7 +80,7 @@ public class Aimer extends Objecto2{
 
     @Override
     public Objecto2 getCopy() {
-        Objecto2 copy = new Aimer(position[0],position[1], this.toShoot);
+        Objecto2 copy = new Aimer(position[0],position[1]);
         copy.type = this.type;
         copy.static_ = this.static_;
         copy.debug = this.debug;

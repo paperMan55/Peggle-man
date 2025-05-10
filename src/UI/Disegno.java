@@ -27,6 +27,7 @@ public class Disegno extends JPanel {
 
         Toolkit.getDefaultToolkit().sync(); // altrimenti lagga in linux
         super.paint(g);
+
         fps.setText((int)(1/Clock.deltaTime)+"");
 
         for (Objecto2 o: ObjectList.objects) {
@@ -75,6 +76,8 @@ public class Disegno extends JPanel {
         risolvo le collisioni solo dopo aver controllato tutti gli oggetti altrimenti
         solo uno dei due oggetti che collidono vede la collisione
          */
+
         ObjectList.resolveCollisions();
+
     }
 }

@@ -1,6 +1,7 @@
 package ObjectTools;
 
 import game.Clock;
+import org.w3c.dom.Text;
 
 import java.awt.*;
 
@@ -53,8 +54,8 @@ public abstract class Objecto2 {
         this.solid = solid;//hello
         
     }
-    public Objecto2(int posX, int posY, float width, float height, Image image){
-        this.texture = new StillTexture(image);
+    public Objecto2(int posX, int posY, float width, float height, Texture texture){
+        this.texture = texture;
         position = new float[]{posX, posY};
         size = new float[]{width,height};
         momentum = new float[]{0,0};
@@ -84,15 +85,13 @@ public abstract class Objecto2 {
     public void checkCollision(){
         for (Objecto2 o:ObjectList.objects) {
             if(!o.equals(this)){
-                switch (o.type){
-                    case Objecto2.LINE:
-                        collideWithLine(o);
-                        break;
-                    case Objecto2.OVAL:
-                        collideWithCircle(o);
-                        break;
-                    default:
-                        collideWithSquare(o);
+                Collision c = switch (o.type) {
+                    case Objecto2.LINE -> collideWithLine(o);
+                    case Objecto2.OVAL -> collideWithCircle(o);
+                    default -> collideWithSquare(o);
+                };
+                if(c!=null){
+                    c.register();
                 }
             }
         }
@@ -101,9 +100,9 @@ public abstract class Objecto2 {
         this.drag = drag;
     }
 
-    public abstract boolean collideWithCircle(Objecto2 o);
-    public abstract boolean collideWithSquare(Objecto2 o);
-    public abstract boolean collideWithLine(Objecto2 o);
+    public abstract Collision collideWithCircle(Objecto2 o);
+    public abstract Collision collideWithSquare(Objecto2 o);
+    public abstract Collision collideWithLine(Objecto2 o);
     //ang è il coefficiente angolare tra y/x
 
     public void resolveBounce(float[] normal){

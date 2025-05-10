@@ -52,13 +52,13 @@ public class Game extends JPanel {
     public void creazioneCampoDiGioco(){
         ObjectList.immediateClearAll();
         MapManager.setMapFromPNG(MapManager.imagename);
-        ObjectList.objects.add(new Aimer(GAME_WIDTH/2f,10, new Ball(0,0)));
-        Objecto2 lineasinistra= new Line2(-1, 750, -1, 0);
-        Objecto2 lineadestra= new Line2(750, 0, 750, 750);
-        Objecto2 lineasu= new Line2(0, -1, 750, -1);
+        ObjectList.objects.add(new Aimer(GAME_WIDTH/2f,10));
+        Line2 lineasinistra= new Line2(-1, 750, -1, 0);
+        Line2 lineadestra= new Line2(750, 0, 750, 750);
+        Line2 lineasu= new Line2(0, -1, 750, -1);
 
 
-        Objecto2 blackhole = new BlackHole(300,100,400,80);
+        Objecto2 blackhole = new Collectable(100,300,new BouncyBall(0,0));
 
         ObjectList.objects.add(lineadestra);
         ObjectList.objects.add(lineasinistra);

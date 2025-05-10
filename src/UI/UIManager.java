@@ -26,8 +26,11 @@ public class UIManager{
     }
     public static void goToPage(Pages page){
         finestraGioco.remove(content);
+        finestraGioco.validate();
+        finestraGioco.setLayout(null);
+
         currentPage = page;
-        Component panel = switch (page) {
+        content = switch (page) {
             case Pages.PLAYER_SELECTOR -> new PlayerSelector();
             case Pages.GAME -> new Game();
             case Pages.MAIN_MENU -> new MainMenu();
@@ -35,9 +38,10 @@ public class UIManager{
             case Pages.END_GAME -> new EndGame();
             default -> null;
         };
-        panel.setBounds(0,0,WINDOWS_WIDTH,WINDOWS_HEIGHT);
-        content = finestraGioco.add(panel);
-        finestraGioco.revalidate();
+
+        content.setBounds(0,0,WINDOWS_WIDTH,WINDOWS_HEIGHT);
+        finestraGioco.add(content);
+
         finestraGioco.repaint();
     }
 

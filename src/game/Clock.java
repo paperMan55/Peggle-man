@@ -11,7 +11,7 @@ public class Clock extends Thread {
     private static Disegno d;
     public static boolean flag = false;
     public static double deltaTime = 0;
-    public static int fpsLimit = 1000;
+    public static int fpsLimit = 2000;
     private static long exTime = 0;
     public static float timeScale = 1f;
 
@@ -50,9 +50,8 @@ public class Clock extends Thread {
         long tmp = System.nanoTime();
         deltaTime =  (double)(Math.abs(tmp) - Math.abs(exTime)) / 1000000000;
         deltaTime *= timeScale;
-
-        d.update();
         ObjectList.updateList();
+        d.update();
         d.repaint();
 
         exTime = tmp;

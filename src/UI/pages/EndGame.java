@@ -41,9 +41,9 @@ public class EndGame extends JPanel {
         replay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GameManager.restart();
-                UIManager.goToPage(Pages.GAME);
 
+                UIManager.goToPage(Pages.GAME);
+                GameManager.restart();
             }
         });
         repaint();

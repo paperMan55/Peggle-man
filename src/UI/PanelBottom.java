@@ -55,5 +55,6 @@ public class PanelBottom extends JPanel{
     }
     public void setPoints(int points){
         this.points.setText("Points: "+points);
+
     }
 }

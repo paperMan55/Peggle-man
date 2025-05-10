@@ -1,9 +1,11 @@
 package game;
 
+import ObjectTools.ObjectList;
 import UI.UIManager;
 import UI.pages.Game;
 import UI.pages.Pages;
 import UI.pages.PlayerSelector;
+import gamePrefabs.*;
 
 import java.util.ArrayList;
 
@@ -18,7 +20,9 @@ public class GameManager {
         currentPlayer = 0;
         turnPoints = 0;
         Game.panelbottom.setPlayer(players.get(currentPlayer).name);
-        setBalls(3);
+        setBalls(new GhostBall(0,0),4);
+
+        Game.panelontheleft.setBalls_left(getCurrentPlayer().balls);
     }
     public static Player getCurrentPlayer(){
         return players.get(currentPlayer);
@@ -28,15 +32,29 @@ public class GameManager {
         turnPoints += points;
         Game.panelbottom.setPoints(turnPoints);
     }
-    private static void giveBalls(int balls){
+    private static void giveBalls(Ball ball, int count){
         for (Player p : players){
-            p.balls += balls;
+            p.addBalls(ball,count);
         }
     }
-    private static void setBalls(int balls){
+    public static void setBalls(Ball ball, int count){
         for (Player p : players){
-            p.balls = balls;
+            p.setBalls(ball, count);
         }
+    }
+    public static void addBalls(Ball ball, int count){
+        for (Player p : players){
+            p.addBalls(ball, count);
+        }
+    }
+    public static void addBallsToCurrent(Ball ball, int count){
+        getCurrentPlayer().addBalls(ball, count);
+        Game.panelontheleft.setBalls_left(getCurrentPlayer().balls);
+
+    }
+    public static void setBallsToCurrent(Ball ball, int count){
+        getCurrentPlayer().setBalls(ball, count);
+        Game.panelontheleft.setBalls_left(getCurrentPlayer().balls);
     }
 
     public static void endTurn(int combo){
@@ -53,21 +71,31 @@ public class GameManager {
         Game.panelbottom.setPlayer(getCurrentPlayer().name);
         Game.panelontheleft.setBalls_left(getCurrentPlayer().balls);
         if(checkEndGame()){
-            UIManager.goToPage(Pages.END_GAME);
+            new Thread(() -> {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+                UIManager.goToPage(Pages.END_GAME);
+            }).start();
+
         }
     }
     public static void restart(){
         currentPlayer = 0;
         turnPoints = 0;
         Game.panelbottom.setPlayer(players.get(currentPlayer).name);
-        setBalls(3);
+        setBalls(new Ball(0,0),3);
         for(Player p : players){
             p.points = 0;
         }
+        Game.panelontheleft.setBalls_left(getCurrentPlayer().balls);
     }
     public static boolean checkEndGame(){
         for(Player p:players){
-            if(p.balls>0){
+            if(!p.balls.isEmpty()){
                 return false;
             }
         }

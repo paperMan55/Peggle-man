@@ -7,7 +7,6 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class CannonBall extends Ball {
-    private int combo = 1;
     public  int range = 65;
     public CannonBall(float posX, float posY) {
         super(posX, posY);
@@ -21,7 +20,7 @@ public class CannonBall extends Ball {
     @Override
     public void onCollisionEnter(Objecto2 o) {
 
-        if(o.getClass() == Peg.class){
+        if(Peg.class.isAssignableFrom(o.getClass())){
             ArrayList<Objecto2> objs = new SphereCast(position,range).overlap();
             for (Objecto2 ob:objs){
                 if(ob.getClass() == Peg.class){
@@ -34,11 +33,11 @@ public class CannonBall extends Ball {
             destroy();
             ObjectList.addObject(new Explosion(getCenter(), range*2));
 
-        }
-
-        if(o.getClass() == BottomTrigger.class){
+        }else if(BottomTrigger.class.isAssignableFrom(o.getClass())){
             GameManager.endTurn(combo);
             destroy(1000);
+        } else if (Collectable.class.isAssignableFrom(o.getClass())) {
+            GameManager.addBallsToCurrent(((Collectable) o).collectable,1);
         }
 
     }

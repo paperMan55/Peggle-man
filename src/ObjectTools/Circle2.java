@@ -25,7 +25,7 @@ public class Circle2 extends Objecto2{
     }
 
     @Override
-    public boolean collideWithCircle(Objecto2 o) {
+    public Collision collideWithCircle(Objecto2 o) {
         if(o.size[0] == o.size[1]){
             double distance = Math.sqrt(Math.pow(getCenter()[0]-o.getCenter()[0],2)+Math.pow(getCenter()[1]-o.getCenter()[1],2));
             if(distance<=size[0]/2+o.size[0]/2){
@@ -35,63 +35,54 @@ public class Circle2 extends Objecto2{
 
                 float[] toadjust= new float[]{(float)(pos2[0]-pos1[0]),(float)(pos2[1]-pos1[1])};
 
-                new Collision(this,o,toadjust,momentum[1]/momentum[0],new float[]{getCenter()[0]-o.getCenter()[0],getCenter()[1]-o.getCenter()[1] });
-                return true;
+                return new Collision(this,o,toadjust,momentum,new float[]{getCenter()[0]-o.getCenter()[0],getCenter()[1]-o.getCenter()[1] });
             }
         }
-        return false;
+        return null;
     }
 
     @Override
-    public boolean collideWithSquare(Objecto2 o) {
+    public Collision collideWithSquare(Objecto2 o) {
         
         Rectangle this_ = new Rectangle(Math.round(position[0]),Math.round(position[1]),(int)size[0],(int)size[1]);
         Rectangle other = new Rectangle(Math.round(o.position[0]),Math.round(o.position[1]),(int)o.size[0],(int)o.size[1]);
         //b  = se due oggetti si toccano
-        if(!o.solid || !this_.intersects(other)){
-            return false;
+        if(!this_.intersects(other)){
+            return null;
         }
-        boolean res = false;
-        res = collideWithLine(new Line2(o.position[0]+o.size[0],o.position[1],o.position[0],o.position[1]));
-        res = res || collideWithLine(new Line2(o.position[0],o.position[1],o.position[0],o.position[1]+o.size[1]));
-        res = res || collideWithLine(new Line2(o.position[0]+o.size[0],o.position[1]+o.size[1],o.position[0]+o.size[0],o.position[1]));
-        res = res || collideWithLine(new Line2(o.position[0],o.position[1]+o.size[1],o.position[0]+o.size[0],o.position[1]+o.size[1]));
+        Collision res = collideWithLine(new Line2(o.position[0]+o.size[0],o.position[1],o.position[0],o.position[1]));
+        if(res == null){
+            res = collideWithLine(new Line2(o.position[0],o.position[1],o.position[0],o.position[1]+o.size[1]));
+        }
+        if(res == null){
+            res = collideWithLine(new Line2(o.position[0]+o.size[0],o.position[1]+o.size[1],o.position[0]+o.size[0],o.position[1]));
+        }
+        if(res == null){
+            res = collideWithLine(new Line2(o.position[0],o.position[1]+o.size[1],o.position[0]+o.size[0],o.position[1]+o.size[1]));
+        }
+        if(res!=null){
+            res.second_obj = o;
+        }else {
+            if(other.contains(new Point((int)getCenter()[0],(int)getCenter()[1]))){
+                return new Collision(this,o,new float[]{0,0},momentum,new float[]{0,0});
+            }
+        }
         return res;
     }
 
     @Override
-    public boolean collideWithLine(Objecto2 o) { //codice preso in "prestito", ancora da testare
-        /*float ax =o.position[0] - getCenter()[0];
-        float ay =o.position[1] - getCenter()[1];
-        float bx =o.size[0] - getCenter()[0];
-        float by =o.size[1] - getCenter()[1];
-        double a = Math.pow(bx - ax,2) + Math.pow(by - ay,2);
-        double b = 2*(ax*(bx - ax) + ay*(by - ay));
-        double c = Math.pow(ax,2) + Math.pow(ay,2) - Math.pow(size[1],2);
-        double disc = Math.pow(b,2) - 4*a*c;
-        if(disc <= 0) return false; // doesn't intersect
-        double sqrtdisc = Math.sqrt(disc);
-        double t1 = (-b + sqrtdisc)/(2*a);
-        double t2 = (-b - sqrtdisc)/(2*a);
-        if((0 < t1 && t1 < 1) || (0 < t2 && t2 < 1)) {
-            //intersect
-            System.out.println("intersect");
-            return true;
-        }
-        return false;
-        */
+    public Collision collideWithLine(Objecto2 o) { //codice preso in "prestito", ancora da testare
 
         if(!new Rectangle((int)position[0],(int)position[1],(int)size[0],(int)size[1]).intersectsLine(o.position[0],o.position[1],o.size[0],o.size[1])){
-            return false;
+            return null;
         }
 
-        float momentumM = momentum[1]/momentum[0];
+
         float[] toAdjust = adjustPosition(o);
         if(toAdjust == null){
-            return false;
+            return null;
         }
-        new Collision(this,o,toAdjust, momentumM,new float[]{(o.position[1]-o.size[1]), -(o.position[0]-o.size[0])});
-        return true;
+        return new Collision(this,o,toAdjust, momentum,new float[]{(o.position[1]-o.size[1]), -(o.position[0]-o.size[0])});
     }
 
     @Override
@@ -135,21 +126,6 @@ public class Circle2 extends Objecto2{
         return new float[]{moveX,moveY};
     }
 
-	@Override
-	public void onCollisionEnter(Objecto2 o) {}
-
-    @Override
-    public void onCollisionExit(Objecto2 o) {
-
-    }
-
-    @Override
-    public void onCollisionStay(Objecto2 o) {
-
-    }
-
-    @Override
-    public void onUpdate() {}
     @Override
     public Objecto2 getCopy() {
         Objecto2 copy = new Circle2(position[0],position[1],size[0]);

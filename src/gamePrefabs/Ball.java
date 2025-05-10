@@ -10,7 +10,7 @@ import java.awt.*;
 
 public class Ball extends Circle2 {
     public static int BALL_SIZE = 20;
-    private int combo = 1;
+    public int combo = 1;
     public Ball(float posX, float posY) {
         super(posX, posY, BALL_SIZE);
         static_ = false;
@@ -23,15 +23,18 @@ public class Ball extends Circle2 {
     @Override
     public void onCollisionEnter(Objecto2 o) {
 
-        if(o.getClass() == Peg.class){
+
+        if(Peg.class.isAssignableFrom(o.getClass())){
             GameManager.addPoints(((Peg) o).value*combo);
             combo ++;
             o.destroy();
-        }
-
-        if(o.getClass() == BottomTrigger.class){
+        }else if(BottomTrigger.class.isAssignableFrom(o.getClass())){
             GameManager.endTurn(combo);
             destroy(1000);
+        }else if (Collectable.class.isAssignableFrom(o.getClass())) {
+            GameManager.addBallsToCurrent(((Collectable) o).collectable,1);
+            System.out.println("collezionato");
+            o.destroy();
         }
 
     }

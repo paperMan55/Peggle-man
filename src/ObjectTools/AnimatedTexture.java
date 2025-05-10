@@ -18,8 +18,9 @@ public class AnimatedTexture extends Texture{
     public int current_frame = 0;
     private double exFrame = 0;
     private ArrayList<AnimationAction> actions = new ArrayList<>();
-
     private Image[] frames;
+    private String[] names;
+
     public AnimatedTexture(String source_folder,Point size, int frame_rate)  {
         init(source_folder,size,frame_rate);
     }
@@ -44,9 +45,12 @@ public class AnimatedTexture extends Texture{
                     sources.add(name);
                 }
             }
+            names = new String[sources.size()];
             frames = new Image[sources.size()];
             for (int i = 0; i < frames.length; i++) {
-                frames[i] = Cache.getCachedPNG(sources.get(i),size);
+                String source = sources.get(i);
+                frames[i] = Cache.getCachedPNG(source,size);
+                names[i] = source;
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -79,6 +83,7 @@ public class AnimatedTexture extends Texture{
             for (AnimationAction animationAction:actions){
                 animationAction.onFrame(current_frame);
             }
+            currentImageName = names[current_frame];
             currentImage = frames[current_frame];
         }
         return currentImage;

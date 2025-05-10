@@ -1,47 +1,60 @@
 package UI;
 
-import java.awt.Color;
+import game.Cache;
+import gamePrefabs.Ball;
 
+import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class PanelOnTheLeft extends JPanel{
-    private int height=0;
-    private int width=0;
-    private float [] position={0,0}; 
-    private JLabel balls_left;
 
-    public PanelOnTheLeft(int relativeHeight){
+    private Label2 balls_left;
+    private ArrayList<BallLabel> ballLabels = new ArrayList<>();
 
-        this.setBackground(Color.MAGENTA);
-        this.setBounds(0,0,215,relativeHeight);
-        //non ancora aggiunto al frame
-        init();
-    }
-    public PanelOnTheLeft(){
-
-        this.setBackground(Color.MAGENTA);
-        this.setBounds(0,0,215,0);
-        //non ancora aggiunto al frame
-        init();
-    }
     public PanelOnTheLeft(int x, int y, int width, int height){
+        setLayout(null);
 
-        this.height=height;
-        this.width=width;
-        this.position[0]=x;
-        this.position[1]=y;
-        this.setBackground(Color.MAGENTA);
+        //this.setBackground(Color.MAGENTA);
+        this.setBounds(x,y,width,height);
 
-        //215 -----width
-        this.setBounds((int)position[0],(int)position[1],width,height);
-        init();
-        //non ancora aggiunto al frame
-    }
-    private void init(){
-        balls_left = new JLabel();
+
+        balls_left = new Label2("",new ImageIcon("src/Images/squarePanel.png"));
+        balls_left.setBounds(0,0,100,40);
         add(balls_left);
+        try {
+            JLabel selected = new JLabel(new ImageIcon(ImageIO.read(new File("src/Images/squarePanel.png")).getScaledInstance(BallLabel.SIZE+6,BallLabel.SIZE+6,4)));
+            selected.setBounds(47,97,BallLabel.SIZE+6,BallLabel.SIZE+6);
+            setComponentZOrder(selected,0);
+            add(selected);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
-    public void setBalls_left(int balls){
-        balls_left.setText("left: "+balls);
+
+    public void setBalls_left(ArrayList<Ball> balls){
+        balls_left.setText("left: "+balls.size());
+        for (BallLabel b : ballLabels){
+            remove(b);
+        }
+        for (int i = 0; i < balls.size(); i++) {
+            BallLabel b = new BallLabel(balls.get(i));
+            b.setLocation(50,100+(i*(BallLabel.SIZE+6)));
+            add(b);
+            ballLabels.add(b);
+            setComponentZOrder(b,1);
+        }
+        repaint();
+    }
+    private class BallLabel extends JLabel{
+        private final static int SIZE = 40;
+        public BallLabel(Ball ball){
+            setSize(SIZE, SIZE);
+            setIcon(new ImageIcon(Cache.getCachedPNG(ball.texture.currentImageName, SIZE, SIZE)));
+        }
     }
 }
