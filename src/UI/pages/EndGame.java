@@ -1,5 +1,6 @@
 package UI.pages;
 
+import UI.DynamicBorder_Panel;
 import UI.UIManager;
 import game.GameManager;
 import game.Player;
@@ -46,6 +47,7 @@ public class EndGame extends JPanel {
                 GameManager.restart();
             }
         });
+
         repaint();
 
     }

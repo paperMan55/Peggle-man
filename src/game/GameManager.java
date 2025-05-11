@@ -6,6 +6,7 @@ import UI.pages.Game;
 import UI.pages.Pages;
 import UI.pages.PlayerSelector;
 import gamePrefabs.*;
+import map_creator.MapManager;
 
 import java.util.ArrayList;
 
@@ -17,11 +18,18 @@ public class GameManager {
 
     public static void startGame(ArrayList<Player> players){
         GameManager.players=players;
+        restart();
+    }
+    public static void restart(){
+        MapManager.setMapFromPNG(MapManager.imagename);
         currentPlayer = 0;
         turnPoints = 0;
-        Game.panelbottom.setPlayer(players.get(currentPlayer).name);
-        setBalls(new GhostBall(0,0),4);
-
+        Game.panelbottom.setPlayers(players);
+        Game.panelontheleft.setCurrentName(getCurrentPlayer().name);
+        setBalls(new Ball(0,0),3);
+        for(Player p : players){
+            p.points = 0;
+        }
         Game.panelontheleft.setBalls_left(getCurrentPlayer().balls);
     }
     public static Player getCurrentPlayer(){
@@ -30,7 +38,7 @@ public class GameManager {
 
     public static void addPoints(int points){
         turnPoints += points;
-        Game.panelbottom.setPoints(turnPoints);
+        Game.panelontheleft.setCurrentPoints(getCurrentPlayer().points+turnPoints);
     }
     private static void giveBalls(Ball ball, int count){
         for (Player p : players){
@@ -58,41 +66,38 @@ public class GameManager {
     }
 
     public static void endTurn(int combo){
-        canShoot = true;
-        if(players.get(currentPlayer).bestCombo<=combo){
-            players.get(currentPlayer).bestCombo = combo;
-        }
-        players.get(currentPlayer).points += turnPoints;
-        turnPoints = 0;
-        currentPlayer++;
-        if(currentPlayer == players.size()){
-            currentPlayer = 0;
-        }
-        Game.panelbottom.setPlayer(getCurrentPlayer().name);
-        Game.panelontheleft.setBalls_left(getCurrentPlayer().balls);
-        if(checkEndGame()){
+        boolean end = checkEndGame();
+        if(end){
+
             new Thread(() -> {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-
                 UIManager.goToPage(Pages.END_GAME);
             }).start();
 
         }
-    }
-    public static void restart(){
-        currentPlayer = 0;
-        turnPoints = 0;
-        Game.panelbottom.setPlayer(players.get(currentPlayer).name);
-        setBalls(new Ball(0,0),3);
-        for(Player p : players){
-            p.points = 0;
+        canShoot = true;
+        if(getCurrentPlayer().bestCombo<=combo){
+            getCurrentPlayer().bestCombo = combo;
         }
+        getCurrentPlayer().points += turnPoints;
+        turnPoints = 0;
+        do {
+            currentPlayer++;
+            if(currentPlayer >= players.size()){
+                currentPlayer = 0;
+            }
+        }while (!end &&getCurrentPlayer().balls.isEmpty());
+
+        Game.panelbottom.refresh();
         Game.panelontheleft.setBalls_left(getCurrentPlayer().balls);
+        Game.panelontheleft.setCurrentName(getCurrentPlayer().name);
+
     }
+
     public static boolean checkEndGame(){
         for(Player p:players){
             if(!p.balls.isEmpty()){

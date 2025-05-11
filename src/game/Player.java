@@ -5,7 +5,7 @@ import gamePrefabs.Ball;
 import java.util.ArrayList;
 
 public class Player {
-    public long points = 0;
+    public int points = 0;
     public int bestCombo = 0;
     public ArrayList<Ball> balls = new ArrayList<>();
     public String name="";

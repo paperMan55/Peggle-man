@@ -5,6 +5,7 @@ import ObjectTools.Objecto2;
 import game.Clock;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ public class Disegno extends JPanel {
     JLabel fps = new JLabel();
     public Disegno(){
         setLayout(null);
+        setBorder(new LineBorder(new Color(53, 53, 53, 255),3,true));
         fps.setBounds(0,0,100,20);
         add(fps);
         Clock clock = new Clock(this);

@@ -30,7 +30,7 @@ public class Ball extends Circle2 {
             o.destroy();
         }else if(BottomTrigger.class.isAssignableFrom(o.getClass())){
             GameManager.endTurn(combo);
-            destroy(1000);
+            destroy(500);
         }else if (Collectable.class.isAssignableFrom(o.getClass())) {
             GameManager.addBallsToCurrent(((Collectable) o).collectable,1);
             System.out.println("collezionato");

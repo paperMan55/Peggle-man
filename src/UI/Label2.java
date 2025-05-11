@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class Label2 extends JPanel {
     private JLabel text = new JLabel();
-    private JLabel b = new JLabel();
+    private DynamicBorder_Panel b;
     private Image background;
 
     public Label2(String text){
@@ -13,16 +13,15 @@ public class Label2 extends JPanel {
         add(this.text);
         this.text.setText(text);
         this.text.setHorizontalAlignment(SwingConstants.CENTER);
-        add(b);
-        setComponentZOrder(b,1);
         setComponentZOrder(this.text,0);
     }
-    public Label2(String text, ImageIcon background){
+    public Label2(String text, String background_source,int borderWidth){
         setLayout(null);
         this.text.setText(text);
-        this.background = background.getImage();
+
         add(this.text);
         this.text.setHorizontalAlignment(SwingConstants.CENTER);
+        b = new DynamicBorder_Panel(background_source,borderWidth);
         add(b);
         setComponentZOrder(b,1);
         setComponentZOrder(this.text,0);
@@ -33,9 +32,7 @@ public class Label2 extends JPanel {
         super.setBounds(x, y, width, height);
         text.setBounds(0,0,width,height);
         b.setBounds(0,0,width,height);
-        if(background == null)return;
-        background = background.getScaledInstance(width,height,4);
-        b.setIcon(new ImageIcon(background));
+
     }
 
     @Override
@@ -43,9 +40,6 @@ public class Label2 extends JPanel {
         super.setBounds(r);
         text.setBounds(0,0,r.width,r.height);
         b.setBounds(0,0,r.width,r.height);
-        if(background == null)return;
-        background = background.getScaledInstance(r.width,r.height,4);
-        b.setIcon(new ImageIcon(background));
     }
 
     public void setText(String text) {

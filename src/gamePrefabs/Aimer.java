@@ -27,16 +27,17 @@ public class Aimer extends Objecto2{
         mouseAdapter = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                Point pos = Game.panelOnTheCenter.getMousePosition();
+                if(pos == null){
+                    return;
+                }
                 System.out.println("--------> "+GameManager.canShoot);
                 Player p = GameManager.getCurrentPlayer();
                 if(p.balls.size()<=0 || !GameManager.canShoot){
                     return;
                 }
                 GameManager.canShoot = false;
-                Point pos = Game.panelOnTheCenter.getMousePosition();
-                if(pos == null){
-                    return;
-                }
+
                 angle = (pos.y - position[1])/(pos.x - position[0]);
                 double forceY = Math.sqrt(force*force/(1/(angle*angle) + 1)) * (pos.y >= position[1]?1:-1);
                 double forceX = Math.sqrt(force*force - forceY*forceY) * (pos.x >= position[0]?1:-1);

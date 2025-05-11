@@ -18,11 +18,7 @@ import java.util.ArrayList;
 
 public class MapManager {
 
-
-static JFrame thisframe;
-static Disegno thisdisegno;
 public static String imagename= "samuele_e_mario_rinco.png";
-static BufferedImage backgroundImage;
 public static ArrayList<Peg> listapegstatica;
 public MapManager(){
     //createWindow();
@@ -94,16 +90,10 @@ public MapManager(){
 
     public static BufferedImage getImage(String nameofImage){
         try {
-            backgroundImage= ImageIO.read(new File("src/Images/"+nameofImage));
-            //g.drawImage(backgroundImage, 0, 0, null);
-    
-            //System.out.println(backgroundImage.getType());
-            
-            //thisdisegno.repaint();
+            return ImageIO.read(new File("src/Images/"+nameofImage));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return backgroundImage;
     
     }
 }
